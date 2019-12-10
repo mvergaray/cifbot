@@ -152,7 +152,7 @@ Controller.saveObjects = (operation) => {
 Controller.getObject = (req, res) => {
   var receiptId = req.params.id,
       dataQuery = 'SELECT R.* ' +
-        'FROM Receipt O  ' +
+        'FROM receipt O  ' +
         'WHERE O.STATUS = 1 AND O.ID = ?;';
 
   dbQuery(dataQuery, [receiptId], function (err, result) {

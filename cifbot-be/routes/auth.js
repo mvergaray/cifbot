@@ -29,6 +29,8 @@ router.post('/login', (req, res, next) => {
       userPayload.role_id = user.role_id;
       userPayload.username = user.username;
 
+      console.log('key:');
+      console.log(RSA_PRIVATE_KEY);
       const token = jwt.sign(userPayload, RSA_PRIVATE_KEY);
 
       return res.json({user, token});
