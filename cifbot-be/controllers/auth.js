@@ -6,7 +6,7 @@ AuthCtrl.authUser = (username, password, done) => {
   // Verify user name
   var usernameLowerCase = username.toLowerCase().trim(),
       query = 'SELECT a.*' +
-        ' FROM User a' +
+        ' FROM user a' +
         ' WHERE a.status > 0 ' +
         ' AND username LIKE ?;',
       user = {};

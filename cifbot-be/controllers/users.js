@@ -15,13 +15,13 @@ UserCtrl.getUsers = (req, res) => {
         'C.description as client_name, C.id client_id, O.name as office_name, ' +
         'A.name as area_name, ' +
         'UB.code ubigeo_id, UB.name ubigeo_desc ' +
-        'FROM USERS U ' +
+        'FROM user U ' +
         'LEFT JOIN AREAS A ON U.locate_area = A.id ' +
         'LEFT JOIN OFFICES O ON A.office_id = O.id ' +
         'LEFT JOIN CLIENTS C ON O.client_id = C.id ' +
         'LEFT JOIN UBIGEO UB ON UB.id = U.ubigeo_id_id ' +
         'WHERE 1 ',
-      countQuery = 'SELECT COUNT(u.ID) AS COUNTER FROM USERS U WHERE 1 ',
+      countQuery = 'SELECT COUNT(u.ID) AS COUNTER FROM user U WHERE 1 ',
       commonQuery = 'AND U.STATUS >= 1 ',
       dataParams = [],
       countParams = [],

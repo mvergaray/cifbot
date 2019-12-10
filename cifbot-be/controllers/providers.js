@@ -20,12 +20,12 @@ Controller.getObjects = (req, res) => {
       orderBy: ''
     },
 
-    dataQuery = `SELECT b.* FROM CompanyProvider a
-      LEFT JOIN Company b
+    dataQuery = `SELECT b.* FROM companyprovider a
+      LEFT JOIN company b
       ON a.provider_company_id = b.id WHERE 1`,
 
-    countQuery = `SELECT COUNT(a.id) AS COUNTER FROM CompanyProvider a
-      LEFT JOIN Company b
+    countQuery = `SELECT COUNT(a.id) AS COUNTER FROM companyprovider a
+      LEFT JOIN company b
       ON a.provider_company_id = b.id WHERE 1 `,
 
     commonQuery = ' ',

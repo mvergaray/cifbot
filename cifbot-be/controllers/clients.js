@@ -21,11 +21,11 @@ Controller.getObjects = (req, res) => {
     },
 
     dataQuery = `SELECT b.* FROM companyclient a
-      LEFT JOIN Company b
+      LEFT JOIN company b
       ON a.client_company_id = b.id WHERE 1`,
 
     countQuery = `SELECT COUNT(a.id) AS COUNTER FROM companyclient a
-      LEFT JOIN Company b
+      LEFT JOIN company b
       ON a.client_company_id = b.id WHERE 1 `,
 
     commonQuery = ' ',
