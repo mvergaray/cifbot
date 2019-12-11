@@ -118,7 +118,7 @@ Controller.handleWebhookPost = (req, res) => {
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
-      `$otal de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
+      `Total de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
     ];
 
     return res.status(200).send({
@@ -229,7 +229,7 @@ Controller.getCalendar = (req, res) => {
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
-      `$otal de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
+      `Total de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
     ];
 
     return res.status(200).send({

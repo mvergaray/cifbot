@@ -104,7 +104,7 @@ console.log(receipt);
           },
           taxAmountSeat = {
             plan_id: 1692, // Acc plan code: 40111,
-            value: receipt.tax_value,
+            value: receiptBP.tax_value,
             operation_id: operationCreated.id,
             status: 1
           },
@@ -114,7 +114,6 @@ console.log(receipt);
             status: 1
           },
           seatsList = [];
-
 
         /**
          * Any receipt should have at least three accountant seats
