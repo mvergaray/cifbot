@@ -4,21 +4,6 @@ const moment = require('moment');
 const receiptSvc = require('../services/receipt');
 let Controller = {};
 
-Controller.handleWebhook = (req, res) => {
-  console.log('handle webhook');
-  console.log('WH Body:');
-  console.log(req.body);
-  console.log('WH Query:');
-  console.log(req.query);
-  console.log('WH Params:');
-  console.log(req.params);
-
-
-
-
-  return res.status(200).send('handleWebhook - GET');
-};
-
 Controller.handleWebhookPost = (req, res) => {
   let period = _.get(req, 'query.period') || {},
     startDate = moment(period.startDate),
@@ -225,7 +210,7 @@ Controller.getCalendar = (req, res) => {
       `# de facturas cobradas: ${results.salesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas: S/ ${results.salesTotalAmount || 0}\n\n`,
       `Total de dinero que ingresó: S/ ${results.incomeTotalAmount || 0}\n\n`,
-      `Facturas e Compra:`,
+      `Facturas de Compra:`,
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
