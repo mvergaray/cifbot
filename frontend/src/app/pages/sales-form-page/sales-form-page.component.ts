@@ -75,8 +75,6 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
     if (this.receiptId) {
       this.getReceipt(this.receiptId);
     }
-
-    this.initValidators();
   }
 
   ngOnDestroy(): void {
@@ -169,9 +167,9 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
       doc_number: this.form.value.doc_number,
       serie: this.form.value.serie,
       total_amount: this.form.value.total_amount,
-      tax_base: this.form.value.total_amount * (100 - this.form.value.tax_percentage) / (100 + this.form.value.tax_percentage),
+      tax_base: this.getTaxBase(),
       tax_percentage: this.form.value.tax_percentage,
-      tax_value: this.form.value.total_amount * this.form.value.tax_percentage / 100,
+      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
       description: this.form.value.description,
       date: this.form.value.date.format(this.dateFormat),
       due_date: this.form.value.due_date.format(this.dateFormat),
@@ -187,18 +185,13 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
       });
   }
 
-
-  private initValidators () {
-    //this.form.get('total_amount').valueChanges
-      //.subscribe(val => {
-      //  console.log(val);
-        this.form.patchValue({
-          tax_base: Math.round(this.form.value.total_amount * (100) / (100 + this.form.value.tax_percentage),2)
-        });
-      //});
+  public getTaxBase () {
+    let taxBase = this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage);
+    taxBase = (Math.round(taxBase * 100) / 100) || 0;
+    return  taxBase;
   }
 
-  public getTaxBase () {
-    return Math.round(this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage), 2) || 0;
+  private mathRandom (number) {
+    return (Math.round(number * 100) / 100) || 0;
   }
 }

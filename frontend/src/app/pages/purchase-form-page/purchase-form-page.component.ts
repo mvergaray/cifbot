@@ -133,7 +133,7 @@ export class PurchaseFormPageComponent implements OnInit {
         this.getTransactions(receipt.operation_id);
 
         if (receipt.assoc_company_id) {
-          services = this.providerSvc.getProviders(receipt.assoc_company_id);
+          services = this.providerSvc.getProvider(receipt.assoc_company_id);
         }
 
         return services;
@@ -170,21 +170,31 @@ export class PurchaseFormPageComponent implements OnInit {
       doc_number: this.form.value.doc_number,
       serie: this.form.value.serie,
       total_amount: this.form.value.total_amount,
-      tax_base: this.form.value.total_amount / (100 + this.form.value.tax_percentage) * 100,
+      tax_base: this.getTaxBase(),
       tax_percentage: this.form.value.tax_percentage,
-      tax_value: this.form.value.total_amount * this.form.value.tax_percentage / 100,
+      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
       description: this.form.value.description,
       date: this.form.value.date.format(this.dateFormat),
       due_date: this.form.value.due_date.format(this.dateFormat),
     };
 
     this.receiptsSvc.updateReceipt(saveObject)
-      .pipe(
-        flatMap((response) => {
+      .pipe(flatMap((response) => {
+        this.receiptId = response.result.id;
         return this.receiptsSvc.getReceipt(response.result.id);
       }))
       .subscribe((operation: any) => {
         this.listDataSource.data = operation.seats || [];
       });
+  }
+
+  public getTaxBase () {
+    let taxBase = this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage);
+    taxBase = (Math.round(taxBase * 100) / 100) || 0;
+    return  taxBase;
+  }
+
+  private mathRandom (number) {
+    return (Math.round(number * 100) / 100) || 0;
   }
 }

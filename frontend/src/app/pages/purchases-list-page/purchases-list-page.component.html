@@ -71,7 +71,7 @@
               <ng-container matColumnDef="tax">
                 <th mat-header-cell *matHeaderCellDef> I.G.V. </th>
                 <td mat-cell *matCellDef="let element">
-                    {{element.tax_base * element.tax_percentage / 100}}
+                    {{element.tax_value}}
                 </td>
             </ng-container>
 

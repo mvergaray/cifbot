@@ -50,7 +50,7 @@ service.getReceipts = (filter) => {
     countQuery += commonQuery;
 
     // Add an ORDER BY sentence
-    dataQuery += ' ORDER BY A.id ASC';
+    dataQuery += ' ORDER BY A.id DESC';
 
     // Set always an start for data
     dataQuery += ' LIMIT ?';

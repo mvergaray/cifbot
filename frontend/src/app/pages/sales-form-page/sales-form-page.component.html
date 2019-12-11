@@ -16,13 +16,6 @@
           <mat-datepicker #dp1></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field fxFlex="200px">
-          <input matInput
-            formControlName="period"
-            placeholder="Periodo"
-            maxlength="50">
-        </mat-form-field>
-
         <mat-form-field >
           <input matInput [matDatepicker]="dp2" placeholder="Fecha de Vencimiento"
             formControlName="due_date"
@@ -30,6 +23,13 @@
           <mat-hint align="end">DD/MM/YYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
           <mat-datepicker #dp2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="200px">
+            <input matInput
+              formControlName="period"
+              placeholder="Periodo"
+              maxlength="50">
         </mat-form-field>
       </div>
 
@@ -96,7 +96,7 @@
 
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end">
         <button mat-raised-button type="submit" color="primary"
-          *ngIf="receiptId">
+          *ngIf="false">
           Actualizar comprobante
         </button>
         <button mat-raised-button type="submit" color="primary"

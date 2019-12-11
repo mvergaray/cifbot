@@ -53,8 +53,9 @@
   </mat-card>
   <br>
   <mat-card class="mat-elevation-z3"
+    *ngIf="listDataSource.data.length > 0"
     fxLayout="column">
-    <table *ngIf="listDataSource.data.length > 0" mat-table [dataSource]="listDataSource">
+    <table mat-table [dataSource]="listDataSource">
         <ng-container matColumnDef="acc_number">
           <th mat-header-cell *matHeaderCellDef> Cuenta </th>
           <td mat-cell *matCellDef="let element">

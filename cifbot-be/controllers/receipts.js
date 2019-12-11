@@ -104,7 +104,7 @@ console.log(receipt);
           },
           taxAmountSeat = {
             plan_id: 1692, // Acc plan code: 40111,
-            value: receipt.tax_percentage,
+            value: receipt.tax_value,
             operation_id: operationCreated.id,
             status: 1
           },

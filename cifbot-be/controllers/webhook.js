@@ -96,7 +96,7 @@ Controller.handleWebhookPost = (req, res) => {
     Facturas e Compra:
     # de facturas: ${results.purchaseCount || 0}\n\n
     # de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n
-    Total de dinero emitido por las facturas S/.${results.salesTotalAmount || 0} \n\n
+    Total de dinero emitido por las facturas S/.${results.purchaseTotalAmount || 0} \n\n
     Total de dinero que salió: S/.${results.outcomeTotalAmount || 0}\n\n
     `;
 
@@ -110,7 +110,7 @@ Controller.handleWebhookPost = (req, res) => {
       `Facturas e Compra:`,
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
-      `Total de dinero emitido por las facturas S/ ${results.salesTotalAmount || 0} \n\n`,
+      `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
       `$otal de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
     ];
 
@@ -217,7 +217,7 @@ Controller.getCalendar = (req, res) => {
       `Facturas e Compra:`,
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
-      `Total de dinero emitido por las facturas S/ ${results.salesTotalAmount || 0} \n\n`,
+      `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
       `$otal de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
     ];
 
