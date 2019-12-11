@@ -170,7 +170,7 @@ export class PurchaseFormPageComponent implements OnInit {
       doc_number: this.form.value.doc_number,
       serie: this.form.value.serie,
       total_amount: this.form.value.total_amount,
-      tax_base: this.form.value.total_amount * (100 - this.form.value.tax_percentage) / (100 + this.form.value.tax_percentage),
+      tax_base: this.form.value.total_amount / (100 + this.form.value.tax_percentage) * 100,
       tax_percentage: this.form.value.tax_percentage,
       tax_value: this.form.value.total_amount * this.form.value.tax_percentage / 100,
       description: this.form.value.description,

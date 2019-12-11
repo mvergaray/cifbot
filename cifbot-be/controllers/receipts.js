@@ -73,7 +73,8 @@ ReceiptCtrl.saveObjects = (req, res) => {
   receipt.status = 1;
   receipt.created_at = new Date();
   receipt.created_by = req.user && req.user.id || -1;
-
+console.log('object to save in save objects receipts');
+console.log(receipt);
   dbQuery('INSERT INTO receipt SET ?;', receipt, function (err, result) {
     let operation = {};
 

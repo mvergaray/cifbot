@@ -73,7 +73,9 @@ Controller.getObjects = (req, res) => {
 
   // Execute both queries at once
   dataParams = dataParams.concat(countParams);
-
+console.log('query clients');
+console.log(dataQuery);
+console.log(dataParams);
   dbQuery(dataQuery + countQuery, dataParams, (err, rows) => {
     if (err) {
       printLog(err);

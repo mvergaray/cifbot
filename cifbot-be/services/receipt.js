@@ -128,4 +128,120 @@ service.getReceipt = (receiptId) => {
   });
 };
 
+service.getSalesCount = (filter) => {
+  let dataQuery = `Select
+    a.id,
+    a.serie,
+    a.doc_number,
+    a.date,
+    a.tax_base,
+    a.tax_value,
+
+    (a.tax_base + a.tax_value) receipt_amount_value,
+    SUM(e.value) receipt_paid_amount_value
+
+    from receipt a
+
+    left join operation b ON a.id = b.receipt_id
+    left join transaction c ON b.id = c.operation_id
+
+    left join operation f ON c.id = f.transaction_id
+
+    left join accseat d ON (b.id = d.operation_id and d.condition = 0)
+    left join accseat e ON (f.id = e.operation_id and e.condition = 0)
+    where a.company_id = ?
+    and a.operation_type_id = 2`,
+    dataParams = [1];
+
+  if (filter.startDate) {
+    dataQuery += ' and date(a.date) >= ? ';
+    dataParams.push(new Date(filter.startDate));
+  }
+
+  if (filter.endDate) {
+    dataQuery += ' AND DATE(a.DATE) <= ? ';
+    dataParams.push(new Date(filter.endDate));
+  }
+
+  dataQuery += `
+    group by
+    a.id,
+    b.id,
+    a.serie,
+    a.doc_number,
+    a.date,
+    a.tax_base,
+    a.tax_value,
+    receipt_amount_value;`;
+
+  return new Promise((resolve, reject) => {
+    dbQuery(dataQuery, dataParams, (err, result) => {
+      if (err) {
+        printLog(err);
+        return reject(err);
+      }
+
+      resolve(result);
+    });
+  });
+};
+
+service.getPurchasesCount = (filter) => {
+  let dataQuery = `Select
+    a.id,
+    a.serie,
+    a.doc_number,
+    a.date,
+    a.tax_base,
+    a.tax_value,
+
+    (a.tax_base + a.tax_value) receipt_amount_value,
+    SUM(e.value) receipt_paid_amount_value
+
+    from receipt a
+
+    left join operation b ON a.id = b.receipt_id
+    left join transaction c ON b.id = c.operation_id
+
+    left join operation f ON c.id = f.transaction_id
+
+    left join accseat d ON (b.id = d.operation_id and d.condition = 1)
+    left join accseat e ON (f.id = e.operation_id and e.condition = 1)
+    where a.company_id = ?
+    and a.operation_type_id = 1`,
+    dataParams = [1];
+
+  if (filter.startDate) {
+    dataQuery += ' and date(a.date) >= ? ';
+    dataParams.push(new Date(filter.startDate));
+  }
+
+  if (filter.endDate) {
+    dataQuery += ' AND DATE(a.DATE) <= ? ';
+    dataParams.push(new Date(filter.endDate));
+  }
+
+  dataQuery += `
+    group by
+    a.id,
+    b.id,
+    a.serie,
+    a.doc_number,
+    a.date,
+    a.tax_base,
+    a.tax_value,
+    receipt_amount_value;`;
+
+  return new Promise((resolve, reject) => {
+    dbQuery(dataQuery, dataParams, (err, result) => {
+      if (err) {
+        printLog(err);
+        return reject(err);
+      }
+
+      resolve(result);
+    });
+  });
+};
+
 module.exports = service;
