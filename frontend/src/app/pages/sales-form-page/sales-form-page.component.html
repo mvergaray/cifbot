@@ -79,7 +79,7 @@
             </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
           <mat-form-field  fxFlex>
             <input matInput autofocus placeholder="Monto Total" formControlName="total_amount" required maxlength="500">
           </mat-form-field>
@@ -88,9 +88,10 @@
             <input matInput autofocus placeholder="IGV %" formControlName="tax_percentage" required maxlength="500" readonly>
           </mat-form-field>
 
-          <mat-form-field  fxFlex>
-            <input matInput autofocus placeholder="Base Imponible" formControlName="tax_base" required maxlength="500" readonly>
-          </mat-form-field>
+          <span fxFlex>
+            S/. {{getTaxBase()}}
+
+          </span>
       </div>
 
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end">

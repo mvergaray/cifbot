@@ -33,6 +33,8 @@ Controller.getObjects = (req, res) => {
     .then((result) => {
       let transactions = [];
 
+      console.log('transactions result');
+      console.log(result)
       _.each(result, (transaction) => {
         transactions.push(transactionSvc.getTransaction(transaction.id));
       })
@@ -40,6 +42,8 @@ Controller.getObjects = (req, res) => {
       return Promise.all(transactions);
     })
     .then((transactions) => {
+      console.log('todas las transaction');
+      console.log(transactions);
       return res.status(200).json({
         results: {
           list: transactions

@@ -67,9 +67,10 @@ service.getTransactions = (filter) => {
 };
 
 service.getTransaction = (transactionId) => {
+  let result;
+
   return new Promise((resolve, reject) => {
-    let result,
-      dataQuery = `SELECT
+    let dataQuery = `SELECT
         A.id,
         A.company_id,
         A.transaction_type_id,
@@ -104,6 +105,9 @@ service.getTransaction = (transactionId) => {
   })
   .then((seats) => {
     result.seats = seats;
+
+    console.log('result of get transactions');
+    console.log(result);
     return result;
   });
 };

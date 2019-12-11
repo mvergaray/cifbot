@@ -134,11 +134,12 @@ service.getSalesCount = (filter) => {
     a.serie,
     a.doc_number,
     a.date,
-    a.tax_base,
-    a.tax_value,
+    a.due_date,
+    IFNULL(a.tax_base, 0),
+    IFNULL(a.tax_value, 0),
 
-    (a.tax_base + a.tax_value) receipt_amount_value,
-    SUM(e.value) receipt_paid_amount_value
+    IFNULL((a.tax_base + a.tax_value), 0) receipt_amount_value,
+    IFNULL(SUM(e.value), 0) receipt_paid_amount_value
 
     from receipt a
 
@@ -159,8 +160,18 @@ service.getSalesCount = (filter) => {
   }
 
   if (filter.endDate) {
-    dataQuery += ' AND DATE(a.DATE) <= ? ';
+    dataQuery += ' AND DATE(a.date) <= ? ';
     dataParams.push(new Date(filter.endDate));
+  }
+
+  if (filter.dueStartDate) {
+    dataQuery += ' and date(a.due_date) >= ? ';
+    dataParams.push(new Date(filter.dueStartDate));
+  }
+
+  if (filter.dueEndDate) {
+    dataQuery += ' AND DATE(a.due_date) <= ? ';
+    dataParams.push(new Date(filter.dueEndDate));
   }
 
   dataQuery += `
@@ -192,11 +203,12 @@ service.getPurchasesCount = (filter) => {
     a.serie,
     a.doc_number,
     a.date,
-    a.tax_base,
-    a.tax_value,
+    a.due_date,
+    IFNULL(a.tax_base, 0),
+    IFNULL(a.tax_value, 0),
 
-    (a.tax_base + a.tax_value) receipt_amount_value,
-    SUM(e.value) receipt_paid_amount_value
+    IFNULL((a.tax_base + a.tax_value), 0) receipt_amount_value,
+    IFNULL(SUM(e.value), 0) receipt_paid_amount_value
 
     from receipt a
 
@@ -221,6 +233,17 @@ service.getPurchasesCount = (filter) => {
     dataParams.push(new Date(filter.endDate));
   }
 
+
+  if (filter.dueStartDate) {
+    dataQuery += ' and date(a.due_date) >= ? ';
+    dataParams.push(new Date(filter.dueStartDate));
+  }
+
+  if (filter.dueEndDate) {
+    dataQuery += ' AND DATE(a.due_date) <= ? ';
+    dataParams.push(new Date(filter.dueEndDate));
+  }
+
   dataQuery += `
     group by
     a.id,
@@ -243,5 +266,6 @@ service.getPurchasesCount = (filter) => {
     });
   });
 };
+
 
 module.exports = service;

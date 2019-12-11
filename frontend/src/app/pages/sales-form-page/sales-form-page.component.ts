@@ -75,6 +75,8 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
     if (this.receiptId) {
       this.getReceipt(this.receiptId);
     }
+
+    this.initValidators();
   }
 
   ngOnDestroy(): void {
@@ -183,5 +185,20 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
       .subscribe((operation: any) => {
         this.listDataSource.data = operation.seats || [];
       });
+  }
+
+
+  private initValidators () {
+    //this.form.get('total_amount').valueChanges
+      //.subscribe(val => {
+      //  console.log(val);
+        this.form.patchValue({
+          tax_base: Math.round(this.form.value.total_amount * (100) / (100 + this.form.value.tax_percentage),2)
+        });
+      //});
+  }
+
+  public getTaxBase () {
+    return Math.round(this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage), 2) || 0;
   }
 }
