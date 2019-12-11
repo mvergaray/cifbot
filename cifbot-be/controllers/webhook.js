@@ -119,7 +119,7 @@ Controller.handleWebhookPost = (req, res) => {
 
 
 Controller.getCalendar = (req, res) => {
-  let period = _.get(req, 'query.due_period') || {},
+  let period = _.get(req, 'query.period') || {},
     startDate = moment(period.startDate),
     endDate = moment(period.endDate),
     periodLabel = 'indicadas';
@@ -196,7 +196,7 @@ Controller.getCalendar = (req, res) => {
     if (_.isEmpty(results.purchasesUncompleted)) {
       resultText = `La empresa no tiene ninguna cuenta pendiente por pagar entre las fechas ${periodLabel}.`;
     } else {
-      resultText = `Las siguientes son las fechas de pago límite para el periodo de consulta: \n\n
+      resultText = `Las siguientes son las fechas de pago límite para el periodo de ${periodLabel}: \n\n
     ${_.map(results.purchasesUncompleted, (purchase) => {
       return `Fecha: ${moment(purchase.due_date).format('DD/MM/YYYY')}. Monto: S/. ${purchase.receipt_amount_value - purchase.receipt_paid_amount_value}.`;
     })}
