@@ -213,6 +213,7 @@ Controller.getCalendar = (req, res) => {
       `Facturas de Compra:`,
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
+      `# de facturas no pagadas: ${results.purchasesUncompleted.length || 0}\n\n`,
       `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
       `Total de dinero que salió: S/ ${results.outcomeTotalAmount || 0}\n\n`
     ];
