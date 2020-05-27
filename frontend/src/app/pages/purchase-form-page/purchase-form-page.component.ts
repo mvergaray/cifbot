@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ProvidersService } from 'src/app/services/provider.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { CreateProviderDialog } from './create-provider/create-provider-dialog.component';
+import { ConfirmDialog } from '../common/confirmation/confirmation-dialog.component';
 
 
 @Component({
@@ -45,6 +47,7 @@ export class PurchaseFormPageComponent implements OnInit {
     private providerSvc: ProvidersService,
     private receiptsSvc: ReceiptsService,
     private transactionSvc: TransactionService,
+    public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -82,28 +85,87 @@ export class PurchaseFormPageComponent implements OnInit {
   ngOnDestroy(): void {
   }
 
-  private initProvidersList () {
-    this.providersList$ = this.form.get('provider').valueChanges
-      .pipe(
-        startWith(''),
-        // delay emits
-        debounceTime(300),
-        // use switch map so as to cancel previous subscribed events, before creating new once
-        switchMap((value) => {
-          let result = [];
-          if (typeof value === 'string') {
-            // lookup from github
-            return this.providerSvc.getProviders(value)
-              .pipe(map(result => result.list));
-          } else {
-            if (!_.isEmpty(value)) {
-              result.push(value);
-            }
-            // if no value is present, return null
-            return of(result);
-          }
-        })
-      );
+  displayFn(user?: any): string | undefined {
+    return user ? user.name : undefined;
+  }
+
+  goToList() {
+    this.router.navigate(['manage/purchases']);
+  }
+
+  openPayments(receiptId) {
+    this.router.navigate([`/manage/purchases/${receiptId}/outcome`], { relativeTo: this.route });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateProviderDialog, {
+      width: '250px',
+      data: { }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.initProvidersList();
+    });
+  }
+
+  openConfirmationDialog(): void {
+    const saveObject = {
+      company_id: 1,
+      operation_type_id: this.form.value.operation,
+      assoc_company_id: this.form.value.provider.id,
+      doc_number: this.form.value.doc_number,
+      serie: this.form.value.serie,
+      total_amount: this.form.value.total_amount,
+      tax_base: this.getTaxBase(),
+      tax_percentage: this.form.value.tax_percentage,
+      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
+      description: this.form.value.description,
+      date: this.form.value.date.format(this.dateFormat),
+      due_date: this.form.value.due_date.format(this.dateFormat),
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '350px',
+      data: saveObject
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.onSubmit();
+      }
+    });
+  }
+
+  onSubmit() {
+    const saveObject = {
+      company_id: 1,
+      operation_type_id: this.form.value.operation,
+      assoc_company_id: this.form.value.provider.id,
+      doc_number: this.form.value.doc_number,
+      serie: this.form.value.serie,
+      total_amount: this.form.value.total_amount,
+      tax_base: this.getTaxBase(),
+      tax_percentage: this.form.value.tax_percentage,
+      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
+      description: this.form.value.description,
+      date: this.form.value.date.format(this.dateFormat),
+      due_date: this.form.value.due_date.format(this.dateFormat),
+    };
+
+    this.receiptsSvc.updateReceipt(saveObject)
+      .pipe(flatMap((response) => {
+        this.receiptId = response.result.id;
+        return this.receiptsSvc.getReceipt(response.result.id);
+      }))
+      .subscribe((operation: any) => {
+        this.listDataSource.data = operation.seats || [];
+      });
+  }
+
+  public getTaxBase () {
+    let taxBase = this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage);
+    taxBase = (Math.round(taxBase * 100) / 100) || 0;
+    return  taxBase;
   }
 
   private getReceipt (id) {
@@ -143,58 +205,42 @@ export class PurchaseFormPageComponent implements OnInit {
       });
   }
 
+  private initProvidersList () {
+    this.providersList$ = this.form.get('provider').valueChanges
+      .pipe(
+        startWith(''),
+        // delay emits
+        debounceTime(300),
+        // use switch map so as to cancel previous subscribed events, before creating new once
+        switchMap((value) => {
+          let result = [];
+          if (typeof value === 'string') {
+            // lookup from github
+            return this.providerSvc.getProviders(value)
+              .pipe(
+                map(result => result.list
+                  .filter(client => client.name.toLowerCase().includes(value.toLowerCase()))
+                )
+              );
+          } else {
+            if (!_.isEmpty(value)) {
+              result.push(value);
+            }
+            // if no value is present, return null
+            return of(result);
+          }
+        })
+      );
+  }
+
+  private mathRandom (number) {
+    return (Math.round(number * 100) / 100) || 0;
+  }
+
   private getTransactions (operationId) {
     this.transactionSvc.getTransactions({ operation_id: operationId })
       .subscribe((transactions) => {
         this.paymentsList.data = _.flatMap(transactions.list, 'seats');
       });
-  }
-
-  displayFn(user?: any): string | undefined {
-    return user ? user.name : undefined;
-  }
-
-  goToList() {
-    this.router.navigate(['manage/purchases']);
-  }
-
-  openPayments(receiptId) {
-    this.router.navigate([`/manage/purchases/${receiptId}/outcome`], { relativeTo: this.route });
-  }
-
-  onSubmit() {
-    const saveObject = {
-      company_id: 1,
-      operation_type_id: this.form.value.operation,
-      assoc_company_id: this.form.value.provider.id,
-      doc_number: this.form.value.doc_number,
-      serie: this.form.value.serie,
-      total_amount: this.form.value.total_amount,
-      tax_base: this.getTaxBase(),
-      tax_percentage: this.form.value.tax_percentage,
-      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
-      description: this.form.value.description,
-      date: this.form.value.date.format(this.dateFormat),
-      due_date: this.form.value.due_date.format(this.dateFormat),
-    };
-
-    this.receiptsSvc.updateReceipt(saveObject)
-      .pipe(flatMap((response) => {
-        this.receiptId = response.result.id;
-        return this.receiptsSvc.getReceipt(response.result.id);
-      }))
-      .subscribe((operation: any) => {
-        this.listDataSource.data = operation.seats || [];
-      });
-  }
-
-  public getTaxBase () {
-    let taxBase = this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage);
-    taxBase = (Math.round(taxBase * 100) / 100) || 0;
-    return  taxBase;
-  }
-
-  private mathRandom (number) {
-    return (Math.round(number * 100) / 100) || 0;
   }
 }

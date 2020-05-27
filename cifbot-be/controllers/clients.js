@@ -73,9 +73,7 @@ Controller.getObjects = (req, res) => {
 
   // Execute both queries at once
   dataParams = dataParams.concat(countParams);
-console.log('query clients');
-console.log(dataQuery);
-console.log(dataParams);
+
   dbQuery(dataQuery + countQuery, dataParams, (err, rows) => {
     if (err) {
       printLog(err);
@@ -99,7 +97,6 @@ Controller.getObject = (req, res) => {
 
   companySvc.getCompany(client_id)
     .then((client) => {
-      console.log(client);
       return res.status(200).json(client);
     })
     .catch((err) => {

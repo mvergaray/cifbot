@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "matFortyTwo": {
+    "cifbot": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,11 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/matFortyTwo",
+            "outputPath": "dist/cifbot",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -64,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "matFortyTwo:build"
+            "browserTarget": "cifbot:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "matFortyTwo:build:production"
+              "browserTarget": "cifbot:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "matFortyTwo:build"
+            "browserTarget": "cifbot:build"
           }
         },
         "test": {
@@ -109,7 +110,7 @@
         }
       }
     },
-    "matFortyTwo-e2e": {
+    "cifbot-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -118,11 +119,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "matFortyTwo:serve"
+            "devServerTarget": "cifbot:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "matFortyTwo:serve:production"
+              "devServerTarget": "cifbot:serve:production"
             }
           }
         },
@@ -138,5 +139,5 @@
       }
     }
   },
-  "defaultProject": "matFortyTwo"
+  "defaultProject": "cifbot"
 }

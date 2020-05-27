@@ -49,6 +49,18 @@ export const navRoutes: NavRoute[] = [
             ),
     },
     {
+        data: {
+            title: 'Mantenimiento de empresas',
+            shouldReuse: false
+        },
+        icon: 'add',
+        path: 'companies',
+        loadChildren: () =>
+            import('./pages/manage-companies/manage-companies.module').then(
+                m => m.ManageCompaniesModule,
+            ),
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

@@ -1,7 +1,7 @@
 <div class="page-content">
   <form fxLayout="column"
     [formGroup]="form"
-    (ngSubmit)="onSubmit()">
+    (ngSubmit)="openConfirmationDialog()">
     <mat-card class="mat-elevation-z3"
       fxLayout="column">
 
@@ -70,7 +70,8 @@
           </mat-autocomplete>
         </mat-form-field>
 
-        <button mat-raised-button type="button" color="primary" >Crear Cliente</button>
+        <button mat-raised-button type="button" color="primary"
+            (click)="openDialog()">Crear Cliente</button>
       </div>
 
       <div fxLayout="row" fxLayoutGap="20px">

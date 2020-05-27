@@ -3,13 +3,15 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, switchMap, map, flatMap, startWith } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ClientsService } from 'src/app/services/client.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ReceiptsService } from 'src/app/services/receipts.service';
 import { OperationService } from 'src/app/services/operation.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { CreateClientDialog } from './create-client/create-client-dialog.component';
+import { ConfirmDialog } from '../common/confirmation/confirmation-dialog.component';
 
 @Component({
   selector: 'app-sales-form-page',
@@ -39,10 +41,13 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
   clientsList$: Observable<any>;
   routeSubscriber;
 
+  filteredOptions: Observable<string[]>;
+
   constructor(
     private clientsSvc: ClientsService,
     private receiptsSvc: ReceiptsService,
     private transactionSvc: TransactionService,
+    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -92,7 +97,7 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
           if (typeof value === 'string') {
             // lookup from github
             return this.clientsSvc.getClients(value)
-              .pipe(map(result => result.list));
+              .pipe(map(result => result.list.filter(client => client.name.toLowerCase().includes(value.toLowerCase()))));
           } else {
             if (!_.isEmpty(value)) {
               result.push(value);
@@ -140,13 +145,6 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getTransactions (operationId) {
-    this.transactionSvc.getTransactions({ operation_id: operationId })
-      .subscribe((transactions) => {
-        this.paymentsList.data = _.flatMap(transactions.list, 'seats');
-      });
-  }
-
   displayFn(user?: any): string | undefined {
     return user ? user.name : undefined;
   }
@@ -157,6 +155,45 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
 
   openPayments(receiptId) {
     this.router.navigate([`/manage/sales/${receiptId}/payment`], { relativeTo: this.route });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateClientDialog, {
+      width: '250px',
+      data: { }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.initClientList();
+    });
+  }
+
+  openConfirmationDialog(): void {
+    const saveObject = {
+      company_id: 1,
+      operation_type_id: this.form.value.operation,
+      assoc_company_id: this.form.value.client.id,
+      doc_number: this.form.value.doc_number,
+      serie: this.form.value.serie,
+      total_amount: this.form.value.total_amount,
+      tax_base: this.getTaxBase(),
+      tax_percentage: this.form.value.tax_percentage,
+      tax_value: this.mathRandom(this.form.value.total_amount - this.getTaxBase()),
+      description: this.form.value.description,
+      date: this.form.value.date.format(this.dateFormat),
+      due_date: this.form.value.due_date.format(this.dateFormat),
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '350px',
+      data: saveObject
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.onSubmit();
+      }
+    });
   }
 
   onSubmit() {
@@ -189,6 +226,13 @@ export class SalesFormPageComponent implements OnInit, OnDestroy {
     let taxBase = this.form.value.total_amount * 100 / (100 + this.form.value.tax_percentage);
     taxBase = (Math.round(taxBase * 100) / 100) || 0;
     return  taxBase;
+  }
+
+  private getTransactions (operationId) {
+    this.transactionSvc.getTransactions({ operation_id: operationId })
+      .subscribe((transactions) => {
+        this.paymentsList.data = _.flatMap(transactions.list, 'seats');
+      });
   }
 
   private mathRandom (number) {
