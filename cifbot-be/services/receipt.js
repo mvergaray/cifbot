@@ -70,7 +70,7 @@ service.getReceipts = (filter) => {
     // Execute both queries at once
     dataParams = dataParams.concat(countParams);
 
-    dbQuery(dataQuery + countQuery, dataParams, function (err, rows) {
+    dbQuery(dataQuery + countQuery, dataParams, (err, rows) => {
       if (err) {
         printLog(err);
         return reject(err);

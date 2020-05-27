@@ -1,0 +1,41 @@
+<form [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+
+<h1 mat-dialog-title>Creación de cliente</h1>
+<div mat-dialog-content>
+    <div fxLayout="row wrap" fxLayoutGap="20px" >
+      <mat-form-field fxFlex>
+        <input matInput autofocus placeholder="Razón Social" formControlName="name" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="number" placeholder="RUC" formControlName="ruc" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="text" placeholder="Dirección" formControlName="address" required>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="number" placeholder="Teléfono" formControlName="telephone" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field>
+          <mat-select placeholder="Tipo de Proveedor" formControlName="providerType" required>
+            <mat-option *ngFor="let provType of providerTypes"[value]="provType.id">
+                {{provType.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox fxFlex="50px"
+                      formControlName="hasDetraction">Detracción</mat-checkbox>
+    </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button type="submit" color="primary" >Registrar</button>
+</div>
+
+</form>

@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Creación de cliente</h1>
+<div mat-dialog-content>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Fecha de documento:</label>
+    <span>{{receipt.date}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Fecha de vencimiento:</label>
+    <span>{{receipt.due_date}}</span>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Tipo de operacion</label>
+    <span>{{receipt.operation_type_id}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Serie - Nro.</label>
+    <span>{{receipt.serie + '-' + receipt.doc_number}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Cliente</label>
+    <span>{{receipt.date}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Glosa</label>
+    <span>{{receipt.description}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Monto total:</label>
+    <span>{{receipt.total_amount}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>IGV</label>
+    <span>{{receipt.tax_value}}</span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" >
+    <label>Base imponible</label>
+    <span>{{receipt.tax_base}}</span>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button  (click)="onConfirm()"color="primary" >Registrar</button>
+</div>

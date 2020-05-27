@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiSuffix: 'http://64.225.0.226/api',
+    apiSuffix: 'http://157.245.242.197/api',
     tokenName: 'cifbot-token'
 };
