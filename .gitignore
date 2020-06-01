@@ -60,3 +60,8 @@ typings/
 
 # next.js build output
 .next
+
+# ========== random files ==========
+.DS_Store
+*/.DS_Store
+**/.DS_Store
