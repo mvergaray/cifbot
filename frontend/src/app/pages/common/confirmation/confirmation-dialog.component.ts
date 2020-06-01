@@ -16,15 +16,16 @@ export interface DialogData {
 })
 export class ConfirmDialog implements OnInit {
   form : FormGroup;
-
+  receipt: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public receipt: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ConfirmDialog>,
     private fb: FormBuilder,
   ) {}
 
   ngOnInit() {
+    this.receipt = this.data;
     this.form = this.fb.group({
       id: [],
       name: [],
