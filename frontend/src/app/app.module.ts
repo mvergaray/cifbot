@@ -7,7 +7,6 @@ import { NavModule } from './core/components/nav/nav.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpConfigInterceptor } from './core/services/http/interceptor.service';
-import { SharedModule } from './core/shared.module';
 import { CoreModule } from '@angular/flex-layout';
 
 @NgModule({

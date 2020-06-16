@@ -1,0 +1,87 @@
+<div fxFlex
+  fxLayout="column">
+
+  <div fxFlex fxLayout.lt-sm="column"
+        fxLayoutAlign="space-between center">
+    <mat-form-field>
+      <input matInput
+          [(ngModel)]="searchFilter"
+          (change)="searchByName()"
+          placeholder="BÚSQUEDA"
+          autocomplete="off">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <button mat-raised-button
+      color="primary"
+      aria-label="Agregar nueva empresa"
+      (click)="goToCreate()">
+      <mat-icon>add</mat-icon>
+      Registrar nueva cuenta
+    </button>
+  </div>
+
+  <div class="mat-elevation-z3 mat-table-container ux-margin-bottom"
+      fxFlex>
+      <div *ngIf="listDataSource.data.length === 0"
+          class="empty-label"
+          fxLayout
+          fxLayoutAlign="start center">
+          <mat-icon>grid_off</mat-icon>
+            No se encontraron cuentas contables
+      </div>
+
+      <table mat-table
+          [dataSource]="listDataSource"
+          *ngIf="listDataSource.data.length > 0"
+          fxFill>
+
+          <!-- acc_number -->
+          <ng-container matColumnDef="acc_number">
+            <th mat-header-cell *matHeaderCellDef> Cuenta contable </th>
+            <td mat-cell *matCellDef="let element"> {{element.acc_number}} </td>
+          </ng-container>
+
+          <!-- acc_desc -->
+          <ng-container matColumnDef="acc_desc">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{ element.acc_desc }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td class="actions-column"
+                  mat-cell
+                  *matCellDef="let element">
+                  <button mat-icon-button
+                      color="primary"
+                      aria-label="Editar"
+                      (click)="goToEdit(element.id)">
+                      <mat-icon>search</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td class="actions-column"
+                  mat-cell
+                  *matCellDef="let element">
+                  <button mat-icon-button
+                      color="warn"
+                      aria-label="Eliminar"
+                      (click)="confirmDeletion(element)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator #paginator
+          showFirstLastButtons="false"
+          [pageSizeOptions]="[40, 80]"
+          (page)="pageEvent = refreshList($event)"></mat-paginator>
+  </div>
+</div>

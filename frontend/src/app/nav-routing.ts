@@ -23,6 +23,7 @@ export const navRoutes: NavRoute[] = [
                 m => m.HomePageModule,
             ),
     },
+
     {
         data: {
             title: 'Comprobante de ventas',
@@ -36,6 +37,7 @@ export const navRoutes: NavRoute[] = [
             ),
 
     },
+
     {
         data: {
             title: 'Comprobante de compras',
@@ -48,6 +50,20 @@ export const navRoutes: NavRoute[] = [
                 m => m.PurchasesListPageModule,
             ),
     },
+
+    {
+        data: {
+            title: 'Provisiones',
+            shouldReuse: false
+        },
+        icon: 'add',
+        path: 'provisiones',
+        loadChildren: () =>
+            import('./pages/provisions/provisions.module').then(
+                m => m.ProvisionsModule,
+            ),
+    },
+
     {
         data: {
             title: 'Mantenimiento de empresas',
@@ -60,6 +76,33 @@ export const navRoutes: NavRoute[] = [
                 m => m.ManageCompaniesModule,
             ),
     },
+
+    {
+        data: {
+            title: 'Mantenimiento de cuentas contable',
+            shouldReuse: false
+        },
+        icon: 'add',
+        path: 'cuentas-contables',
+        loadChildren: () =>
+            import('./pages/accounting-set/accounting-set.module').then(
+                m => m.AccountingSetModule,
+            ),
+    },
+
+    {
+        data: {
+            title: 'Reportes',
+            shouldReuse: false
+        },
+        icon: 'add',
+        path: 'reportes',
+        loadChildren: () =>
+            import('./pages/reporting/reporting.module').then(
+                m => m.ReportingModule,
+            ),
+    },
+
     {
         path: '',
         redirectTo: 'home',

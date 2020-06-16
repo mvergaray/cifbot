@@ -1,0 +1,65 @@
+<form [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+
+<h1 mat-dialog-title>Detalle de provisón</h1>
+<div mat-dialog-content>
+    <div fxLayout="row wrap" fxLayoutGap="20px" >
+      <mat-form-field fxFlex>
+        <input matInput autofocus placeholder="Secuencia" formControlName="name" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="number" placeholder="Nro. Documento" formControlName="doc_number" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="text" placeholder="Centro de costos" formControlName="cost_center" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="dp1" placeholder="Fecha Documento"
+          formControlName="date"
+          [max]="unavailabilityForm.controls.date.value">
+        <mat-hint align="end">DD/MM/YYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+        <mat-datepicker #dp1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="dp1" placeholder="Fecha Vencimiento"
+          formControlName="date"
+          [max]="unavailabilityForm.controls.due_date.value">
+        <mat-hint align="end">DD/MM/YYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+        <mat-datepicker #dp1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="number" placeholder="Debe" formControlName="debit" required maxlength="500">
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <input matInput autofocus type="number" placeholder="Haber" formControlName="credit" required maxlength="500">
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+          <mat-select placeholder="Tipo de Proveedor" formControlName="providerType" required>
+            <mat-option *ngFor="let provType of providerTypes"[value]="provType.id">
+                {{provType.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox fxFlex="50px"
+                      formControlName="hasDetraction">Detracción</mat-checkbox>
+    </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button type="submit" color="primary" >Registrar</button>
+</div>
+
+</form>

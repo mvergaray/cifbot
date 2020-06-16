@@ -1,9 +1,10 @@
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CompaniesService } from 'src/app/services/companies.service';
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 
 export interface DialogData {
   animal: string;
@@ -11,10 +12,18 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'create-provider-dialog',
-  templateUrl: 'create-provider-dialog.html',
+  selector: 'provision-detail-dialog',
+  templateUrl: 'provision-detail-dialog.html',
 })
-export class CreateProviderDialog {
+export class ProvisionDetailDialog {
+  dateValues = {
+    date: moment().add(5, 'years'),
+    due_date: moment().add(5, 'years')
+  };
+  unavailabilityForm = this.fb.group({
+    date: [this.dateValues.date.format()],
+    due_date: [this.dateValues.due_date.format()]
+  });
   form : FormGroup;
   providerTypes = [{
     id: 1,
@@ -25,7 +34,7 @@ export class CreateProviderDialog {
   }];
 
   constructor(
-    public dialogRef: MatDialogRef<CreateProviderDialog>,
+    public dialogRef: MatDialogRef<ProvisionDetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -65,7 +74,7 @@ export class CreateProviderDialog {
     this.companiesSvc
       .update(company, companyId)
       .subscribe((company: any) => {
-        this._snackBar.open("El proveedor ha sido registrado.", "OK", {
+        this._snackBar.open("El detalle ha sido registrado.", "OK", {
           duration: 5000,
         });
         this.onNoClick();

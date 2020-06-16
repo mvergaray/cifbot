@@ -1,5 +1,4 @@
-<form [formGroup]="form"
-    (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
 
 <h1 mat-dialog-title>Creación de cliente</h1>
 <div mat-dialog-content>
@@ -32,7 +31,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-raised-button type="submit" color="primary" >Registrar</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary" >Registrar</button>
 </div>
 
 </form>

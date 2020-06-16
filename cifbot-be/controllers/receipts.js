@@ -73,8 +73,7 @@ ReceiptCtrl.saveObjects = (req, res) => {
   receipt.status = 1;
   receipt.created_at = new Date();
   receipt.created_by = req.user && req.user.id || -1;
-console.log('object to save in save objects receipts');
-console.log(receipt);
+
   dbQuery('INSERT INTO receipt SET ?;', receipt, function (err, result) {
     let operation = {};
 
@@ -127,17 +126,22 @@ console.log(receipt);
           taxAmountSeat.condition = 0;
           taxableAmountSeat.plan_id = 265, // Acc plan code: 70111,
           taxableAmountSeat.condition = 0;
-        } else {
+
+          seatsList.push(seatSvc.saveSeat(taxableAmountSeat));
+          seatsList.push(seatSvc.saveSeat(taxAmountSeat));
+          seatsList.push(seatSvc.saveSeat(totalAmountSeat));
+        } else if (receipt.operation_type_id === 2) {
           totalAmountSeat.condition = 0;
           totalAmountSeat.plan_id = 920; // Acc plan code: 1212;
           taxAmountSeat.condition = 1;
           taxableAmountSeat.plan_id = 645, // Acc plan code: 70111,
           taxableAmountSeat.condition = 1;
+
+          seatsList.push(seatSvc.saveSeat(taxableAmountSeat));
+          seatsList.push(seatSvc.saveSeat(taxAmountSeat));
+          seatsList.push(seatSvc.saveSeat(totalAmountSeat));
         }
 
-        seatsList.push(seatSvc.saveSeat(taxableAmountSeat));
-        seatsList.push(seatSvc.saveSeat(taxAmountSeat));
-        seatsList.push(seatSvc.saveSeat(totalAmountSeat));
 
         Promise.all(seatsList)
           .then(() => {

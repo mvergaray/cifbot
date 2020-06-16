@@ -205,33 +205,33 @@ export class PurchaseFormPageComponent implements OnInit {
       });
   }
 
-  private initProvidersList () {
-    this.providersList$ = this.form.get('provider').valueChanges
-      .pipe(
-        startWith(''),
-        // delay emits
-        debounceTime(300),
-        // use switch map so as to cancel previous subscribed events, before creating new once
-        switchMap((value) => {
-          let result = [];
-          if (typeof value === 'string') {
-            // lookup from github
-            return this.providerSvc.getProviders(value)
-              .pipe(
-                map(result => result.list
-                  .filter(client => client.name.toLowerCase().includes(value.toLowerCase()))
-                )
-              );
-          } else {
-            if (!_.isEmpty(value)) {
-              result.push(value);
+    private initProvidersList () {
+      this.providersList$ = this.form.get('provider').valueChanges
+        .pipe(
+          startWith(''),
+          // delay emits
+          debounceTime(300),
+          // use switch map so as to cancel previous subscribed events, before creating new once
+          switchMap((value) => {
+            let result = [];
+            if (typeof value === 'string') {
+              // lookup from github
+              return this.providerSvc.getProviders(value)
+                .pipe(
+                  map(result => result.list
+                    .filter(client => client.name.toLowerCase().includes(value.toLowerCase()))
+                  )
+                );
+            } else {
+              if (!_.isEmpty(value)) {
+                result.push(value);
+              }
+              // if no value is present, return null
+              return of(result);
             }
-            // if no value is present, return null
-            return of(result);
-          }
-        })
-      );
-  }
+          })
+        );
+    }
 
   private mathRandom (number) {
     return (Math.round(number * 100) / 100) || 0;

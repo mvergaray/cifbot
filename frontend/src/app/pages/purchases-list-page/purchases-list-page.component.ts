@@ -27,6 +27,7 @@ export class PurchasesListPageComponent implements OnInit {
   ngOnInit() {
     this.getReceipts();
   }
+  
   ngOnDestroy(): void {
   }
 

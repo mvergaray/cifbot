@@ -85,7 +85,7 @@ Controller.handleWebhookPost = (req, res) => {
     # de facturas cobradas: ${results.salesCompletedCount || 0}\n\n
     Total de dinero emitido por las facturas: ${results.salesTotalAmount || 0}\n\n
     Total de dinero que ingresó: ${results.incomeTotalAmount || 0}\n\n
-    Facturas e Compra:
+    Facturas de Compra:
     # de facturas: ${results.purchaseCount || 0}\n\n
     # de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n
     Total de dinero emitido por las facturas S/.${results.purchaseTotalAmount || 0} \n\n
@@ -99,7 +99,7 @@ Controller.handleWebhookPost = (req, res) => {
       `# de facturas cobradas: ${results.salesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas: S/ ${results.salesTotalAmount || 0}\n\n`,
       `Total de dinero que ingresó: S/ ${results.incomeTotalAmount || 0}\n\n`,
-      `Facturas e Compra:`,
+      `Facturas de Compra:`,
       `# de facturas: ${results.purchaseCount || 0}\n\n`,
       `# de facturas pagadas: ${results.purchasesCompletedCount || 0}\n\n`,
       `Total de dinero emitido por las facturas S/ ${results.purchaseTotalAmount || 0} \n\n`,
