@@ -1,0 +1,33 @@
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="menu" ng-click="vm.openSidebar()">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+
+    <h2 flex md-truncate>CIFBOT</h2>
+
+    <md-menu md-position-mode="target-right bottom">
+      <md-button aria-label="Settings"
+        class="md-icon-button"
+        ng-click="$mdMenu.open($event)">
+      <md-icon md-svg-icon="settings" ></md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+            <md-button ng-click="vm.goToProfile()">
+              <md-icon md-svg-icon="person" ></md-icon>
+              <span>Perfil</spaan>
+            </md-button>
+        </md-menu-item>
+
+        <md-menu-item>
+          <md-button ng-click="vm.logout()">
+            <md-icon md-svg-icon="exit_to_app" ></md-icon>
+            <span>Cerrar sesión</spaan>
+          </md-button>
+        </md-menu-item>
+
+      </md-menu-content>
+    </md-menu>
+  </div>
+</md-toolbar>

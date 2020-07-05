@@ -1,0 +1,105 @@
+<section layout="row"
+          layout-fill
+          flex>
+
+  <md-sidenav
+      class="md-sidenav-left"
+      md-component-id="left"
+      md-is-locked-open="$mdMedia('gt-md')"
+      md-whiteframe="4">
+
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Súper Envíos</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+
+      <md-list class="ux-margin-bottom" flex>
+        <md-subheader class="md-no-sticky" layout="column">
+          <div>
+            <div layout>
+              <md-icon md-svg-icon="home"></md-icon>
+              <h4>Menú Principal</h4>
+            </div>
+
+            <div layout>
+              <md-icon md-svg-icon="person"></md-icon>
+              <h5>{{vm.username}}</h5>
+            </div>
+          </div>
+        </md-subheader>
+
+
+        <div
+            ng-repeat="menu in vm.mainMenu"
+            ng-if="menu.isAllowed">
+          <a ng-href="{{menu.aLink}}" class="md-button">
+            <md-list-item ng-click="vm.toggleSubmenu(menu, $event)"
+                          layout-fill>
+              <md-icon ng-if="menu.aIcon && !menu.hideSubmenu"
+                      md-svg-icon="{{::menu.aIcon}}"></md-icon>
+
+              <md-icon ng-if="menu.hideSubmenu"
+                      md-svg-icon="expand_less"></md-icon>
+              <p>{{menu.label}}</p>
+
+            </md-list-item>
+          </a>
+
+          <a class="md-button"
+              ng-hide="menu.hideSubmenu"
+              ng-repeat="item in menu.subMenu"
+              ng-if="item.isAllowed"
+              ng-href="{{item.aLink}}">
+            <md-list-item ng-click="vm.toggleLeft(menu, $event)"
+                          layout-fill>
+
+                <md-icon ng-if="item.aIcon"
+                        md-svg-icon="{{::item.aIcon}}"></md-icon>
+                <p>{{item.aText}}</p>
+            </md-list-item>
+          </a>
+
+
+        </div>
+
+
+      </md-list>
+
+
+      <ul layout="column" ng-if>
+          <li ng-repeat="menu in mainMenu">
+              <menu-toggle
+                  ng-if="menu.isAllowed">
+                  <a ng-href="{{menu.aLink}}" class="md-button"
+                      ng-click="toggleLeft()"
+                      layout
+                      layout-align="start center">
+
+                      <md-icon ng-if="menu.aIcon"
+                              md-svg-icon="{{::menu.aIcon}}"></md-icon>
+
+                      <span>{{menu.aText}}</span>
+                  </a>
+              </menu-toggle>
+
+              <ul ng-if="menu.subMenu.length > 0">
+                  <li ng-repeat="item in menu.subMenu"
+                      ng-if="item.isAllowed"
+                      ng-class="{active: item.isActive}">
+
+                      <md-icon ng-if="item.aIcon"
+                              md-svg-icon="{{::item.aIcon}}"></md-icon>
+
+                      <a ng-href="{{item.aLink}}" class="md-button"
+                          ng-click="toggleLeft()"
+                          layout
+                          layout-align="start center">
+                          {{item.aText}}
+                      </a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+    </md-content>
+
+  </md-sidenav>
