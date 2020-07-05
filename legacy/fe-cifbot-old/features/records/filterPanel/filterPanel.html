@@ -1,0 +1,390 @@
+<md-content class="c-filter-panel_toggle"
+            layout
+            layout-align="space-between center"
+            md-padding>
+  <md-button aria-label="Open phone interactions menu"
+            class="md-icon-button"
+            ng-click="vm.togglePanel()"
+            ng-cloak>
+    <md-icon md-svg-icon="expand_less"
+          ng-if="!vm.isCollapsed"></md-icon>
+    <md-icon md-svg-icon="expand_more"
+          ng-if="vm.isCollapsed"></md-icon>
+  </md-button>
+
+  <h4>Gestión de registros</h4>
+
+  <records-menu data-config="vm.menuConfig"
+      data-filter-params="vm.filterParams"
+      data-permissions="vm.permissions"></records-menu>
+</md-content>
+
+
+<md-content class="c-filter-panel check-element animate-show-hide"
+            ng-show="!vm.isCollapsed"
+            layout>
+
+  <label class="c-scan-button u-text-center"
+      ng-click="vm.openQRScanner()"
+      ng-if="vm.mdMediaXs()"
+      layout="column" layout-align="center center"
+      layout-padding>
+
+      <md-icon md-svg-icon="qrcode"></md-icon>
+
+      Escanear código
+  </label>
+
+
+  <div layout layout-wrap layout-padding>
+
+
+
+
+    <div class="flex-item"
+        ng-if="!vm.isUserDelivery()">
+      <assignment-picker flex
+        data-selected-client="vm.searchKeys.client_id"></assignment-picker>
+    </div>
+    <div class="flex-item">
+      <md-input-container class="md-block" flex>
+        <input type="text"
+            placeholder="MANIFIESTO"
+            maxlength="15"
+            aria-label="manifiesto"
+            ng-model="vm.searchKeys.binnacle_id"
+            data-only-numbers
+            data-focus
+            data-tabindex="1"/>
+      </md-input-container>
+    </div>
+    <div class="flex-item">
+      <md-input-container class="md-block" flex>
+        <input type="text"
+            placeholder="REGISTRO"
+            maxlength="15"
+            aria-label="registro"
+            ng-model="vm.searchKeys.code"
+            data-only-numbers
+            data-focus
+            data-tabindex="2"/>
+      </md-input-container>
+    </div>
+    <div class="flex-item half">
+      <md-input-container flex>
+        <label>DESDE</label>
+        <md-datepicker id="c-datepicker_start-date"
+          class="c-datepicker-container"
+          ng-model="vm.searchKeys.start_date"
+          md-placeholder="DD/MM/AAAA"
+          md-max-date="vm.maxDate"
+          layout
+          layout-align="start center"
+          data-focus
+          data-tabindex="3"/></md-datepicker>
+      </md-input-container>
+    </div>
+    <div class="flex-item half">
+      <md-input-container flex>
+        <label>HASTA</label>
+        <md-datepicker id="c-datepicker_start-date"
+          class="c-datepicker-container"
+          ng-model="vm.searchKeys.end_date"
+          md-placeholder="DD/MM/AAAA"
+          md-max-date="vm.maxDate"
+
+          layout
+          layout-align="start center"
+          data-focus
+          data-tabindex="3"/></md-datepicker>
+      </md-input-container>
+    </div>
+    <div class="flex-item">
+      <operator-picker flex
+        data-selected-operator="vm.searchKeys.created_by"></operator-picker>
+    </div>
+    <div class="flex-item">
+      <md-input-container class="md-block" flex>
+        <input type="text"
+            placeholder="REMITENTE"
+            aria-label="remitente"
+            ng-model="vm.searchKeys.sender"
+            data-focus
+            data-tabindex="5"/>
+      </md-input-container>
+    </div>
+    <div class="flex-item">
+      <md-input-container class="md-block" flex>
+        <input type="text"
+            placeholder="DESTINATARIO"
+            aria-label="destinatario"
+            ng-model="vm.searchKeys.destination"
+            data-focus
+            data-tabindex="6"/>
+      </md-input-container>
+    </div>
+    <div class="flex-item">
+      <md-input-container class="md-block" flex>
+        <input type="text"
+            placeholder="Nro. Documento"
+            aria-label="documento"
+            ng-model="vm.searchKeys.document"
+            data-focus
+            data-tabindex="7"/>
+      </md-input-container>
+    </div>
+
+    <div class="action-buttons" layout layout-align="end center" flex>
+      <md-button data-ng-click="vm.clearFilter()">ELIMINAR FILTROS</md-button>
+
+      <md-button class="md-raised md-primary"
+        data-ng-click="vm.updateFilter()">BUSCAR</md-button>
+    </div>
+  </div>
+</md-content>
+
+<md-content class="c-filter-panel"
+    ng-if
+    layout="column"
+    layout-padding>
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">CLIENTE:</span>
+    <assignment-picker flex
+      data-selected-client="vm.searchKeys.client_id"></assignment-picker>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">MANIFIESTO:</span>
+    <md-input-container md-no-float class="md-block" flex>
+      <input type="text"
+          placeholder="Ingrese el código de Manifiesto"
+          maxlength="15"
+          aria-label="manifiesto"
+          ng-model="vm.searchKeys.binnacle_id"
+          data-only-numbers
+          data-focus
+          data-tabindex="1"/>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">COD. REGISTRO:</span>
+    <md-input-container md-no-float class="md-block" flex>
+      <input type="text"
+          placeholder="Ingrese el código del registro"
+          maxlength="15"
+          aria-label="registro"
+          ng-model="vm.searchKeys.code"
+          data-only-numbers
+          data-focus
+          data-tabindex="2"/>
+    </md-input-container>
+  </div>
+
+  <div layout
+    layout-xs="column"
+    flex>
+    <div layout layout-align="start center" flex>
+      <span class="c-filter-panel_input-label">DESDE:</span>
+      <md-datepicker id="c-datepicker_start-date"
+        class="c-datepicker-container"
+        ng-model="vm.searchKeys.start_date"
+        md-placeholder="DD/MM/YYY"
+
+        md-max-date="vm.maxDate"
+        layout
+        layout-align="center center"
+        data-focus
+        data-tabindex="3"/></md-datepicker>
+    </div>
+
+    <div layout layout-align="start center" flex>
+      <span class="c-filter-panel_input-label">HASTA:</span>
+      <md-datepicker id="c-datepicker_end-date"
+        class="c-datepicker-container"
+        ng-model="vm.searchKeys.end_date"
+        md-placeholder="DD/MM/YYY"
+
+        md-max-date="vm.maxDate"
+        layout
+        layout-align="center center"
+        data-focus
+        data-tabindex="3"/></md-datepicker>
+    </div>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">OPERARIO:</span>
+    <operator-picker flex
+      data-selected-operator="vm.searchKeys.created_by"></operator-picker>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">REMITENTE:</span>
+    <md-input-container md-no-float class="md-block" flex>
+      <input type="text"
+          aria-label="remitente"
+          ng-model="vm.searchKeys.sender"
+          data-focus
+          data-tabindex="5"/>
+    </md-input-container>
+  </div>
+
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">DESTINATARIO:</span>
+    <md-input-container md-no-float class="md-block" flex>
+      <input type="text"
+          aria-label="destinatario"
+          ng-model="vm.searchKeys.destination"
+          data-focus
+          data-tabindex="6"/>
+    </md-input-container>
+  </div>
+
+
+  <div layout layout-align="start center" flex>
+    <span class="c-filter-panel_input-label">NRO. DOCUMENTO:</span>
+    <md-input-container md-no-float class="md-block" flex>
+      <input type="text"
+          aria-label="documento"
+          ng-model="vm.searchKeys.document"
+          data-focus
+          data-tabindex="7"/>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="end center">
+    <md-button data-ng-click="vm.clearFilter()">ELIMINAR FILTROS</md-button>
+
+    <md-button class="md-raised md-primary"
+      data-ng-click="vm.updateFilter()">BUSCAR</md-button>
+  </div>
+
+</md-content>
+
+<!-- Panel for small devices -->
+<md-content class="c-filter-panel"
+    ng-if
+    layout="column"
+    layout-padding>
+
+    <div layout layout-align="end end">
+      <md-icon class=""
+        ng-click="vm.closePanel()"
+        md-svg-icon="close"></md-icon>
+    </div>
+
+  <div layout layout-align="start center" flex
+      ng-if="!vm.isUserDelivery()">
+    <assignment-picker flex
+      data-selected-client="vm.searchKeys.client_id"></assignment-picker>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <md-input-container class="md-block" flex>
+      <input type="text"
+          placeholder="MANIFIESTO"
+          maxlength="15"
+          aria-label="manifiesto"
+          ng-model="vm.searchKeys.binnacle_id"
+          data-only-numbers
+          data-focus
+          data-tabindex="1"/>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <md-input-container class="md-block" flex>
+      <input type="text"
+          placeholder="REGISTRO"
+          maxlength="15"
+          aria-label="registro"
+          ng-model="vm.searchKeys.code"
+          data-only-numbers
+          data-focus
+          data-tabindex="2"/>
+    </md-input-container>
+  </div>
+
+  <div layout
+        layout-xs="column"
+        layout-align="start center" flex>
+    <md-input-container flex>
+      <label>DESDE</label>
+      <md-datepicker id="c-datepicker_start-date"
+        class="c-datepicker-container"
+        ng-model="vm.searchKeys.start_date"
+        md-placeholder="DD/MM/AAAA"
+        md-max-date="vm.maxDate"
+        layout
+        layout-align="start center"
+        data-focus
+        data-tabindex="3"/></md-datepicker>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <md-input-container flex>
+      <label>HASTA</label>
+      <md-datepicker id="c-datepicker_start-date"
+        class="c-datepicker-container"
+        ng-model="vm.searchKeys.end_date"
+        md-placeholder="DD/MM/AAAA"
+        md-max-date="vm.maxDate"
+
+        layout
+        layout-align="start center"
+        data-focus
+        data-tabindex="3"/></md-datepicker>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <operator-picker flex
+      data-selected-operator="vm.searchKeys.created_by"></operator-picker>
+  </div>
+
+  <div layout layout-align="start center" flex>
+    <md-input-container class="md-block" flex>
+      <input type="text"
+          placeholder="REMITENTE"
+          aria-label="remitente"
+          ng-model="vm.searchKeys.sender"
+          data-focus
+          data-tabindex="5"/>
+    </md-input-container>
+  </div>
+
+
+  <div layout layout-align="start center" flex>
+    <md-input-container class="md-block" flex>
+      <input type="text"
+          placeholder="DESTINATARIO"
+          aria-label="destinatario"
+          ng-model="vm.searchKeys.destination"
+          data-focus
+          data-tabindex="6"/>
+    </md-input-container>
+  </div>
+
+
+  <div layout layout-align="start center" flex>
+    <md-input-container class="md-block" flex>
+      <input type="text"
+          placeholder="Nro. Documento"
+          aria-label="documento"
+          ng-model="vm.searchKeys.document"
+          data-focus
+          data-tabindex="7"/>
+    </md-input-container>
+  </div>
+
+  <div layout layout-align="end center">
+    <md-button data-ng-click="vm.clearFilter()">ELIMINAR FILTROS</md-button>
+
+    <md-button class="md-raised md-primary"
+      data-ng-click="vm.updateFilter()">BUSCAR</md-button>
+  </div>
+
+</md-content>

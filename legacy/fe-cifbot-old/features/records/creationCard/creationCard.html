@@ -1,0 +1,42 @@
+<md-card class="margin-1 md-padding md-whiteframe-4dp" layout="column">
+  <md-card-title-text>
+    <h4>
+      Mesa de parte
+    </h4>
+  </md-card-title-text>
+  <md-divider></md-divider>
+  <div>
+      <div class="margin-v-1" layout
+        layout-align="start start">
+        <label flex="40">Recibido por:</label>
+        <span flex="60">
+            {{ vm.document.created_by_name }}
+        </span>
+      </div>
+      <div class="margin-v-1" layout
+        layout-align="start start">
+          <label flex="40">Fecha:</label>
+          <span flex="60">
+              {{ vm.document.created_at }}
+          </span>
+      </div>
+      <div class="margin-v-1"
+          ng-if="!!vm.document.updated_by"
+          layout
+          layout-align="start start">
+          <label flex="40">Actualizado por:</label>
+          <span flex="60">
+              {{ vm.document.updated_by_name }}
+          </span>
+      </div>
+      <div class="margin-v-1"
+          ng-if="!!vm.document.updated_by"
+          layout
+          layout-align="start start">
+          <label flex="40">Fecha de actualización:</label>
+          <span flex="60">
+              {{ vm.document.updated_at }}
+          </span>
+      </div>
+  </div>
+</md-card>

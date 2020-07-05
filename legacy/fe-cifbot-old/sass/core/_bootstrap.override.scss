@@ -1,0 +1,28 @@
+.ad-table-pagination-container.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+
+  &::before,
+  &::after {
+    content: none;
+  }
+}
+
+.records-panel {
+
+  .ad-table-ajax-container .ad-table-container>table {
+    margin-bottom: 300px;
+  }
+}
+
+.form-control[disabled] {
+  background: white;
+}
+
+.c-record-form {
+  .radio input[type=radio] {
+    position: relative;
+    margin-left: 0;
+  }
+}

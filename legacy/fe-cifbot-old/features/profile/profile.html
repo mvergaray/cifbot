@@ -1,0 +1,75 @@
+<br>
+<div class="col-md-12">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href=".settings" data-toggle="tab" aria-expanded="true">Datos del usuario</a></li>
+            <li ><a href=".password" data-toggle="tab" aria-expanded="true">Actualizar contraseña</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane settings active" id="">
+                <form class="form-horizontal" name="form" validate>
+                    <div class="box-body">
+                        <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               >
+                               Usuario
+                        </label>
+                            <div class="col-sm-10">
+                               <span>
+                                   {{ profile.username }}
+                               </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >Nombres</label>
+                            <div class="col-sm-10">
+                                <span>{{ profile.name }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >Apellidos</label>
+                            <div class="col-sm-10">
+                               <span>{{ profile.last_name }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane password">
+                <form class="form-horizontal" name="formpass" validate>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="oldclave" class="col-sm-2 control-label" data-required-field>Contraseña actual</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="oldclave" placeholder="Contraseña actual" required
+                                       ng-model="profile.oldPassword"
+                                       data-custom-validation>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newclave" class="col-sm-2 control-label" data-required-field>Nueva Contraseña</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newclave" placeholder="Nueva Contraseña" required
+                                       ng-model="profile.password"
+                                       data-custom-validation>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmclave" class="col-sm-2 control-label" data-required-field>Confirmar Nueva Contraseña</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="confirmclave" placeholder="Confirmar contraseña" required
+                                       ng-model="profile.newPassword"
+                                       data-custom-validation>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary pull-right"
+                                ng-click="savePassword(formpass)" ng-disabled="isDisabled" >Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

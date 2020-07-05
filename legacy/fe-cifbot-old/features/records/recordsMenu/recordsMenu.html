@@ -1,0 +1,71 @@
+<md-menu md-position-mode="target-right bottom">
+  <md-button aria-label="Open phone interactions menu"
+    class="md-icon-button"
+    ng-click="$mdMenu.open($event)">
+  <md-icon md-svg-icon="more_vert" ></md-icon>
+  </md-button>
+  <md-menu-content width="4">
+  <md-menu-item ng-if="vm.showActionButtons()">
+      <md-button ng-click="vm.redirectTo(0)">
+        <md-icon md-svg-icon="note_add" ></md-icon>
+        <span>Crear nuevo documento</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showActionButtons()">
+      <md-button ng-click="vm.redirectTo(1)">
+        <md-icon md-svg-icon="assignment_ind" ></md-icon>
+        <span>Asignación de documentos</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showActionButtons()">
+      <md-button ng-click="vm.redirectTo(2)">
+        <md-icon md-svg-icon="assignment_returned" ></md-icon>
+        <span>Descarga de documentos</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showActionButtons()">
+      <md-button ng-click="vm.redirectTo(3)">
+        <md-icon md-svg-icon="assignment_turned_in" ></md-icon>
+        <span>Cierre de documentos</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-divider ng-if="vm.showActionButtons()"></md-menu-divider>
+
+  <md-menu-item ng-if="vm.showReportButtons()">
+      <md-button ng-click="vm.generateTickets('ticket')"
+          ng-disabled="vm.isTicketDisabled()">
+        <md-icon md-svg-icon="picture_in_picture_alt" ></md-icon>
+        <span>Descargar cargos</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showReportButtons()">
+      <md-button ng-click="vm.generateTickets('certificate')"
+          ng-disabled="vm.isTicketDisabled()">
+        <md-icon md-svg-icon="file_copy" ></md-icon>
+        <span>Descargar cargos de área</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showReportButtons()">
+      <md-button ng-click="vm.generateTickets('excel')"
+          ng-disabled="vm.isTicketDisabled()">
+        <md-icon md-svg-icon="check_box" ></md-icon>
+        <span>Reporte por selección</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showReportButtons()">
+      <md-button ng-click="vm.generateFullExcel()"
+          ng-disabled="vm.isFullLoading">
+        <md-icon md-svg-icon="find_in_page" ></md-icon>
+        <span>Reporte según filtros</span>
+      </md-button>
+  </md-menu-item>
+
+  </md-menu-content>
+</md-menu>

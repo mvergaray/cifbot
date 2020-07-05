@@ -1,0 +1,19 @@
+<div class="records-panel" ng-if="vm.showGrid"
+    data-records-panel
+    layout>
+  <ad-table-ajax table-name="records"
+              column-definition="vm.colDef"
+              table-classes="table table-bordered table-hover bg-blank"
+              page-sizes="[40, 80]"
+              page-size="40"
+              pagination-btn-group-classes="pagination pagination-sm"
+              ajax-config="vm.tableConfig"
+              page-loader="methods.pageLoader"
+              row-class-provider="vm.tableConfig.rowClass"
+              state="vm.tableConfig.state"
+              selected-items="vm.selectedRecords"
+              items-not-found-message="No se encontraron datos"
+              on-row-click="vm.rowClicked"
+              layout>
+  </ad-table-ajax>
+</div>

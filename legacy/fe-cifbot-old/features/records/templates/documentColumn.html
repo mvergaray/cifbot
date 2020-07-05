@@ -1,0 +1,10 @@
+<div ng-switch="item.document && item.document.length > 50">
+    <div ng-switch-when="true"
+         title="{{item.document}}">
+        {{ item.document | limitTo: 50 : 0}}...
+    </div>
+    <div ng-switch-when="false"
+         title="{{item.document}}">
+        {{ item.document }}
+    </div>
+</div>

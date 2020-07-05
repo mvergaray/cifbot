@@ -1,0 +1,39 @@
+{
+  "name": "angular1.6-webpack",
+  "version": "1.0.0",
+  "description": "Creando un proyecto angular 1.6 con webpack 4",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --open --hot --mode development",
+    "build": "webpack --progress --hide-modules --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "ng-annotate-webpack-plugin": "^0.3.0",
+    "node-sass": "^4.14.1",
+    "raw-loader": "^0.5.1",
+    "sass": "^1.26.8",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.26",
+    "angular": "^1.8.0",
+    "angular-animate": "^1.8.0",
+    "angular-aria": "^1.8.0",
+    "angular-material": "^1.1.23",
+    "angular-messages": "^1.8.0",
+    "angular-resource": "^1.8.0",
+    "angular-route": "^1.8.0",
+    "angular-sanitize": "^1.8.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.27.0"
+  }
+}

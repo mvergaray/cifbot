@@ -1,0 +1,64 @@
+.c-record-form {
+
+  .se-note.se-note-info {
+    background-color: #00c0ef !important;
+    color: #fff !important;
+    border-radius: 3px;
+    margin: 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #0097bc;
+  }
+
+  .c-record_binnacle-card {
+    md-card-title-text {
+      height: 40px;
+    }
+
+    label,
+    span {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    span {
+      margin-left: 8px;
+    }
+  }
+
+  h3, h4 {
+    margin: 0;
+  }
+ /*
+
+  .se-note.se-note-info {
+    background-color: #00c0ef !important;
+    color: #fff !important;
+    border-radius: 3px;
+    margin: 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #0097bc;
+  }
+
+  md-card {
+    margin: 8px !important;
+    height: 100%;
+  }
+
+  .ui-select-toggle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+      margin-left: 0;
+    }
+  }
+
+  .c-record_binnacle-card {
+    label,
+    span {
+      height: 12px;
+      line-height: 18px;
+    }
+
+  }*/
+}

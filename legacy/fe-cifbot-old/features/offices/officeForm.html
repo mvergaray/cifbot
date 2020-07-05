@@ -1,0 +1,128 @@
+
+
+
+<div class="md-padding c-record-form">
+    <div class="margin-v-1"
+      ng-switch="!!office.id"
+      layout
+      layout-align="space-between center">
+        <h4 class="box-title"
+          ng-switch-when="false">Creación de Oficina</h4>
+        <h4 class="box-title"
+          ng-switch-when="true">Edición de Oficina</h4>
+    </div>
+
+    <md-card flex="100"
+            flex-gt-sm="70">
+        <form class="form-horizontal" name="form" validate>
+            <md-card-content>
+                <div class="form-group"
+                        ng-show="!!office.id">
+                    <label for="descripcion"
+                            class="col-sm-2 control-label">
+                        Código
+                    </label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{ office.id | leftPad }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name"
+                            class="col-sm-2 control-label"
+                            required-field>Oficina</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                class="form-control"
+                                id="name"
+                                placeholder="Nombre de oficina"
+                                maxlength="200"
+                                required
+                                ng-model="office.name"
+                                data-auto-focus>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                            required-field>Cliente</label>
+                    <div class="col-sm-10">
+                        <ui-select required
+                                    ng-model="office.client_id"
+                                    ng-class="{'ui-select-element': true}"
+                                    ng-disabled="clientsList.length < 1">
+                            <ui-select-match placeholder="Seleccione un cliente.">
+                                <span ng-bind="$select.selected.description"></span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="item.id as item in clientsList | propsFilter: {description: $select.search}">
+                                <span ng-bind-html="item.description | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label">Dirección</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                class="form-control"
+                                id="address"
+                                placeholder="Dirección"
+                                maxlength="300"
+                                ng-model="office.address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="telephone" class="col-sm-2 control-label">Teléfono</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                class="form-control"
+                                maxlength="15"
+                                id="telephone"
+                                placeholder="Teléfono"
+                                ng-model="office.telephone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Cuenta de Correo</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                class="form-control"
+                                id="email"
+                                placeholder="Cuenta de correo"
+                                maxlength="200"
+                                ng-model="office.email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact" class="col-sm-2 control-label">Contacto</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                class="form-control"
+                                id="contact"
+                                placeholder="Contacto"
+                                maxlength="200"
+                                ng-model="office.contact">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="legacy_id" class="col-sm-2 control-label">Código externo</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                                maxlength="3"
+                                class="form-control"
+                                id="legacy_id"
+                                placeholder="ID del sistema original"
+                                ng-model="office.legacy_id">
+                    </div>
+                </div>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button type="submit" class=""
+                            ng-click="backToList()">Cancelar
+                </md-button>
+
+                <md-button type="submit" class="md-primary md-raised md-primary"
+                            ng-click="save(form)">Guardar
+                </md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

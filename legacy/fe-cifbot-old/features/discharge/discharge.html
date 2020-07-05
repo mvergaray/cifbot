@@ -1,0 +1,124 @@
+<md-content class="c-filter-panel_toggle md-padding"
+    layout
+    layout-align="space-between center"
+    md-padding>
+    <h4>Descarga de Registros</h4>
+</md-content>
+<md-content class="md-padding" layout-fill >
+    <md-card class="md-padding">
+        <md-card-content>
+            <form class="form-horizontal assign-form" name="form" validate>
+                <div class="form-group">
+                    <label for="received_by"
+                            class="col-sm-2 control-label"
+                            required-field>Recepcionado por:</label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                                maxlength="100"
+                                class="form-control"
+                                id="received_by"
+                                placeholder="Recepcionado por"
+                                required=""
+                                ng-model="discharge.f_description">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observation"
+                            class="col-sm-2 control-label"
+                            required-field>Observación:</label>
+                    <div class="col-sm-8">
+                        <select name="observation"
+                                class="form-control"
+                                id="observation"
+                                required=""
+                                ng-model="vm.discharge.s_description">
+                            <option value="">Seleccione una descripción.</option>
+                            <option value="Entregado">Entregado</option>
+                            <option value="Deficiente">Deficiente</option>
+                            <option value="Ausente">Ausente</option>
+                            <option value="Se mudó'">Se mudó</option>
+                            <option value="Rechazado">Rechazado</option>
+                            <option value="Fuera de cobertura">Fuera de cobertura</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col-md-offset-2 col-sm-8 discharge-otros" ng-if="vm.discharge.s_description == 'Otros'">
+                        <input type="text"
+                                maxlength="100"
+                                class="form-control"
+                                id="received_by"
+                                placeholder="Ingreso otro motivo"
+                                required
+                                ng-model="vm.discharge.s_description_extra">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                            required-field>Fecha</label>
+                    <div class="col-sm-3">
+                        <date-picker
+                            ng-model="vm.discharge.discharge_date"
+                            data-tabindex="0"
+                            data-title="Fecha">
+                        </date-picker>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                            required-field>Registros</label>
+                    <div class="col-sm-8">
+                        <multi-tag data-selection="vm.discharge.recordCodes"
+                                    data-placeholder="Ingrese el código del registro a asignar."></multi-tag>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit"
+                                class="btn btn-success pull-right"
+                                formnovalidate
+                                ng-click="vm.getRecords()">Verificar</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p class="row col-sm-8 col-sm-offset-2" ng-show="!!vm.missingCodes && !!vm.missingCodes.length">
+                        <b>Los siguientes códigos no fueron encontrados: </b>
+                        <span ng-repeat="item in missingCodes">{{item}}{{$last ? '.' : ', '}}</span>
+                    </p>
+                </div>
+
+                <div class="row col-sm-12" ng-show="vm.isTableVisible">
+                    <ad-table-ajax table-name="dischargeRecords"
+                                    column-definition="vm.colDef"
+                                    table-classes="table table-bordered table-hover bg-blank"
+                                    page-sizes="[10, 20]"
+                                    page-size="10"
+                                    pagination-btn-group-classes="pagination pagination-sm"
+                                    ajax-config="vm.tableConfig"
+                                    page-loader="methods.pageLoader"
+                                    state="vm.tableConfig.state"
+                                    on-data-loaded="vm.validateTableData($response)"
+                                    items-not-found-message="No se encontraron datos">
+                    </ad-table-ajax>
+                </div>
+
+            </form>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button type="submit" class=""
+                        ng-click="vm.backToList()">Cancelar
+            </md-button>
+
+            <md-button type="submit" class=" md-primary"
+                        ng-click="vm.save(form)"
+                        ng-disabled="vm.isDisabled">Guardar
+            </md-button>
+
+            <md-button type="submit" class="md-raised md-primary"
+                        ng-click="vm.save(form, true)"
+                        ng-disabled="vm.isDisabled">Guardar y Exportar
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</md-content>

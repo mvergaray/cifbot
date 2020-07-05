@@ -1,0 +1,34 @@
+.c-record-filter-bar {
+  position: relative;
+
+  .c-record-filter_left-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #9e9e9e;
+  }
+
+  .c-record-filter_right-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #9e9e9e;
+  }
+
+  .c-record-filter_search-input {
+    background: #fcfcfc;
+    height: 40px;
+    width: 270px;
+    padding: 0 40px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: #212121;
+    font-size: .88em;
+    font-weight: 400;
+
+    @media only screen and (min-width: 400px) {
+      min-width: 350px;
+    }
+  }
+
+}

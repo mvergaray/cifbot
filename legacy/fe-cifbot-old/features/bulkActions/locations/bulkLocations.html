@@ -1,0 +1,49 @@
+<md-content class="c-filter-panel_toggle md-padding"
+            layout
+            layout-align="space-between center"
+            md-padding>
+  <h4>Listado de folders</h1>
+
+</md-content>
+<md-content class="md-padding" layout-fill >
+  <md-card class="md-padding">
+      <md-card-content>
+        <form class="form-horizontal" name="form" validate>
+
+            <div ng-repeat="item in vm.folders">
+              <div class="form-group">
+                  <label for="nrodoc"
+                      class="col-sm-2 control-label"
+                      required-field>Ruta:</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="name" ng-model="item.name" maxlength="500" class="form-control">
+                  </div>
+                  <div class="col-sm-1"
+                       ng-if="!!$index">
+                      <span ng-click="vm.removeFolder($index)">
+                          <i class="fa fa-times" role="button"></i>
+                      </span>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">
+                    <span>
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-click="vm.addFolder()">
+                            <i class="fa fa-plus-circle"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button type="submit" class="md-raised md-primary"
+                ng-click="vm.save(vm.form)">Guardar</md-button>
+
+      </md-card-actions>
+  </md-card>
+</md-content>

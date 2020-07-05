@@ -1,0 +1,40 @@
+<md-menu md-position-mode="target-right bottom">
+  <md-button aria-label="Open phone interactions menu"
+    class="md-icon-button"
+    ng-click="$mdMenu.open($event)">
+  <md-icon md-svg-icon="more_vert" ></md-icon>
+  </md-button>
+  <md-menu-content width="4">
+  <md-menu-item>
+      <md-button ng-click="vm.printRecord()">
+        <md-icon md-svg-icon="print" ></md-icon>
+        <span>Imprimir cargo</span>
+      </md-button>
+  </md-menu-item>
+
+  <md-menu-item ng-if="vm.showAddAttachment()">
+    <md-button>
+      <label for="c-upload-file"
+        layout>
+          <md-icon md-svg-icon="add_photo_alternate" ></md-icon>
+          <span>Adjuntar imagen</span>
+      </label>
+    </md-button>
+  </md-menu-item>
+
+
+  </md-menu-content>
+</md-menu>
+
+<input type="file"
+      class="ng-hide"
+      id="c-upload-file"
+      name="c-upload-file"
+      multiple
+      ng-model="vm.customer.file"
+      ng-change="vm.saveData(vm.customer.file)"
+      ngf-select
+      ngf-pattern="'application/pdf,image/jpeg,image/png'"
+      ngf-accept="'application/pdf,image/jpeg,image/png'"
+      ngf-max-size="50MB"
+  />

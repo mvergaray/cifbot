@@ -1,0 +1,10 @@
+<div ng-switch="item.reference && item.reference.length > 50">
+    <div ng-switch-when="true"
+         title="{{item.reference}}">
+        {{ item.reference | limitTo: 50 : 0}}...
+    </div>
+    <div ng-switch-when="false"
+         title="{{item.reference}}">
+        {{ item.reference }}
+    </div>
+</div>

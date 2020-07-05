@@ -1,0 +1,39 @@
+<md-card class="margin-1 md-padding md-whiteframe-4dp" layout="column">
+  <md-card-title-text layout-align="start center">
+    <h4>
+      Archivos adjuntos
+    </h4>
+  </md-card-title-text>
+  <md-divider></md-divider>
+  <div>
+    <md-list ng-cloak
+      ng-if="vm.attachments.length">
+      <md-list-item ng-repeat="file in vm.attachments"
+        ng-click="vm.displayAttachment(file)">
+        <md-icon md-svg-icon="image"></md-icon>
+        <p>
+          <label class="control-label">
+            Adjuntado por:
+          </label>
+          <span>
+            {{file.created_by}}
+          </span>
+
+          <br>
+
+          <label class="control-label">
+            Fecha:
+          </label>
+          <span>
+            {{file.date}}
+          </span>
+
+        </p>
+      </md-list-item>
+    </md-list>
+    <div class="margin-v-1"
+      ng-if="!vm.attachments.length">
+      El registro no tiene archivos adjuntos.
+    </div>
+  </div>
+</md-card>

@@ -1,0 +1,418 @@
+
+
+<div class="c-record-form" ng-switch="!!document.idrecord">
+  <div class=""
+    layout
+    layout-align="space-between center">
+      <md-button type="submit"
+                  class="md-icon-button"
+                  ng-click="backToList()">
+          <md-icon md-svg-icon="keyboard_arrow_left"></md-icon>
+      </md-button>
+
+      <h4 class="box-title"
+        ng-switch-when="false">Creación de Registro</h4>
+      <h4 class="box-title"
+        ng-switch-when="true">Edición de Registro</h4>
+
+      <div ng-if="document.origin == 1"
+              class="se-note se-note-info">
+          Nota: Este registro ha sido importado desde otro sistema.
+      </div>
+
+      <record-menu></record-menu>
+  </div>
+
+  <div class="md-padding" layout="column"
+    layout-gt-sm>
+    <div flex="100"
+        flex-gt-sm="70">
+      <md-card class="md-whiteframe-4dp margin-v-1">
+        <form class="form-horizontal record-form" name="form" ng-if="!pageIsLoading" validate>
+        <md-card-content>
+            <div class="form-group"
+                    ng-if="!!document.idrecord">
+                <label for="name"
+                        class="col-sm-2 control-label">Código:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">{{ document.code }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name"
+                        class="col-sm-2 control-label"
+                        required-field>Enviado por: </label>
+                <div class="col-sm-9" >
+                    <div ng-if="showSender()">
+                        <se-selector config="senderConfig"></se-selector>
+                    </div>
+                </div>
+            </div>
+
+            <!--oficina seccion-->
+            <div class="form-group">
+              <label for="name"
+                      class="col-sm-2 control-label">Oficina - Sección:</label>
+              <div class="col-sm-10">
+                  <p class="form-control-static">{{ document.sender.value.office_name }} - {{ document.sender.value.area_name }}</p>
+              </div>
+            </div>
+            <!--/oficina seccion-->
+
+            <!--tipo de salida-->
+            <div class="form-group" layout
+                layout-xs="column">
+                <label class=" control-label col-sm-2" required-field>
+                    Tipo de salida
+                </label>
+
+                <div class=""
+                    layout
+                    flex>
+                    <div flex>
+                        <label class="radio">
+                            <input type="radio"
+                                    value="1"
+                                    ng-model="document.delivery_type_id"
+                                    ng-disabled="isViewOnly()"
+                                    ng-required="!document.delivery_type_id">
+                            <span>Usuario</span>
+                        </label>
+                    </div>
+                    <div flex>
+                        <label class="radio">
+                            <input type="radio"
+                                    value="2"
+                                    ng-model="document.delivery_type_id"
+                                    ng-disabled="isViewOnly()"
+                                    ng-required="!document.delivery_type_id">
+                                    <span>Clientes</span>
+                        </label>
+                    </div>
+                    <div flex>
+                        <label class="radio">
+                            <input type="radio"
+                                    value="3"
+                                    ng-model="document.delivery_type_id"
+                                    ng-disabled="isViewOnly()"
+                                    ng-required="!document.delivery_type_id">
+                                    <span>Otros</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <!--/tipo de salida-->
+
+            <div ng-switch="document.delivery_type_id">
+              <!--delivery user-->
+              <div class="delivery-group" ng-switch-when="1">
+                  <!--Users dropdown-->
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label"
+                          required-field>Para:</label>
+                      <div class="col-sm-6">
+                              <se-selector config="deliveryUserConfig"></se-selector>
+                      </div>
+                  </div>
+                  <!--oficina seccion-->
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label">Dirección de Envío:</label>
+                      <div class="col-sm-10">
+                          <p class="form-control-static">{{ document.deliveryUser.value.office_name }} - {{ document.deliveryUser.value.area_name }}</p>
+                      </div>
+                  </div>
+                  <!-- Ubicación -->
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label">Ubicación: </label>
+                      <div class="col-sm-10">
+                          <p class="form-control-static">{{ document.deliveryUser.value.ubigeo_desc || '-' }}</p>
+                      </div>
+                  </div>
+              </div>
+              <!--delivery client-->
+              <div class="delivery-group" ng-switch-when="2">
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label"
+                          required-field>Para:</label>
+                      <div class="col-sm-6">
+                          <se-selector config="deliveryClientConfig"></se-selector>
+                      </div>
+                  </div>
+                  <!--oficina seccion-->
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label">Dirección:</label>
+                      <div class="col-sm-10">
+                          <p class="form-control-static">{{ document.deliveryClient.value.address || '-' }}</p>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="name"
+                          class="col-sm-2 control-label">Ubicación: </label>
+                      <div class="col-sm-10">
+                          <p class="form-control-static">{{ document.deliveryClient.value.ubigeo_desc || '-' }}</p>
+                      </div>
+                  </div>
+              </div>
+              <!--delivery other-->
+              <div class="delivery-group" ng-switch-when="3">
+                  <div class="form-group">
+                      <label for="para"
+                          class="col-sm-2 control-label"
+                          required-field>Para:</label>
+                      <div class="col-sm-6">
+                          <input type="text"
+                                  class="form-control"
+                                  id="para"
+                                  placeholder="Para"
+                                  maxlength="200"
+                                  required
+                                  ng-disabled="isViewOnly()"
+                                  ng-model="document.dt_others_para">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="direccion"
+                          class="col-sm-2 control-label"
+                          required-field>Dirección:</label>
+                      <div class="col-sm-6">
+                          <input type="text"
+                                  class="form-control"
+                                  id="direccion"
+                                  placeholder="Dirección"
+                                  maxlength="400"
+                                  required
+                                  ng-disabled="isViewOnly()"
+                                  ng-model="document.dt_others_address">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="ubigeo"
+                          class="col-sm-2 control-label"
+                          required-field>Ubicación:</label>
+                      <div class="col-sm-10"
+                              ng-switch="isViewOnly()">
+                          <div ng-switch-when="false">
+                              <im-location initial-code="{{ document.dt_others_ubigeo }}"
+                                              on-change="onChangeLocation(data)"
+                                              reset-data="resetData"></im-location>
+                          </div>
+                          <p class="form-control-static"
+                              ng-switch-when="true">{{document.dpto}} - {{document.province}} - {{document.district}}</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group"
+                          ng-if="!isViewOnly() && !document.idrecord && currentUser.isAllowed('internal_clients', '_create')">
+                      <div class="col-sm-6 col-sm-offset-2">
+                          <div class="checkbox inline">
+                              <label class="checkbox col-sm-6">
+                                  <input type="checkbox"
+                                          value="true"
+                                          ng-model="document.createInternalClient">
+                                  <b>Crear Cliente Interno</b>
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="Peso"
+                  class="col-sm-2 control-label"
+                  required-field>Peso:</label>
+              <div class="col-sm-2">
+                  <input type="number"
+                      class="form-control"
+                      id="Peso"
+                      placeholder="Peso"
+                      maxlength="3"
+                      required
+                      ng-disabled="isViewOnly()"
+                      ng-model="document.weight">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contacto"
+                  class="col-sm-2 control-label"
+                  >Contacto:</label>
+              <div class="col-sm-6">
+                  <input type="text"
+                      class="form-control"
+                      id="Contacto"
+                      placeholder="Contacto"
+                      maxlength="200"
+                      ng-disabled="isViewOnly()"
+                      ng-model="document.contact">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="descripcion"
+                  class="col-sm-2 control-label"
+                  required-field>Descripción:</label>
+              <div class="col-sm-6">
+                  <select name="description"
+                          class="form-control"
+                          id="description"
+                          required=""
+                          ng-disabled="isViewOnly()"
+                          ng-model="document.document_type_id"
+                          ng-options="value.id as value.name for (key, value) in documentTypes.results.list">
+                      <option value="">Seleccionar Descripción</option>
+                  </select>
+              </div>
+            </div>
+
+            <div ng-switch="!!document.idrecord">
+              <div ng-switch-when="true">
+                  <div class="form-group">
+                      <label for="nrodoc"
+                          class="col-sm-2 control-label"
+                          required-field>Nro. Doc:</label>
+                      <div class="col-sm-4">
+                          <textarea name="nrodoc"
+                                      class="form-control"
+                                      id="nrodoc"
+                                      cols="50"
+                                      rows="5"
+                                      maxlength="8000"
+                                      ng-disabled="isViewOnly()"
+                                      ng-model="document.document"
+                                      required></textarea>
+                      </div>
+                      <label for="detalle"
+                          class="col-sm-1 control-label"
+                          required-field>Detalle:</label>
+                      <div class="col-sm-4">
+                          <textarea name="detalle"
+                                      class="form-control"
+                                      id="detalle"
+                                      cols="50"
+                                      rows="5"
+                                      maxlength="8000"
+                                      ng-disabled="isViewOnly()"
+                                      ng-model="document.reference"
+                                      required></textarea>
+                      </div>
+                  </div>
+              </div>
+              <div ng-switch-default>
+                  <multiple-record disabled="isViewOnly()"
+                                      data="document.multipleRecords">
+                  </multiple-record>
+              </div>
+            </div>
+
+
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button type="submit" class=""
+                        ng-click="backToList()">Regresar
+            </md-button>
+
+            <md-button type="submit" class=" md-primary"
+                        ng-if="!isViewOnly() && !document.idrecord"
+                        ng-click="save(form, true)"
+                        ng-disabled="isSaveDisabled">Guardar
+            </md-button>
+
+            <md-button type="submit" class="md-primary md-raised"
+                    ng-if="!isViewOnly()"
+                    ng-click="save(form)"
+                    ng-disabled="isSaveDisabled">Guardar y Salir
+            </md-button>
+        </md-card-actions>
+        </form>
+      </md-card>
+    </div>
+
+    <div class="c-record_binnacle-card"
+        ng-if="document.idrecord"
+      layout="column"
+      flex="100"
+      flex-gt-sm="30">
+
+      <creation-card ng-if="!!document.idrecord"
+          data-document="document"
+          layout="column"></creation-card>
+
+      <div ng-repeat="binnacle in document.binnacle"
+        ng-switch="binnacle.action_id">
+
+        <assignment-card ng-switch-when="1"
+                data-binnacle="binnacle"></assignment-card>
+
+        <discharge-card ng-switch-when="2"
+            data-binnacle="binnacle"></discharge-card>
+
+        <closed-card ng-switch-when="3"
+            data-binnacle="binnacle"></closed-card>
+
+      </div>
+
+      <attachments-card data-document-code="document.code"></attachments-card>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+   id="createInternalClient"
+   tabindex="-1"
+   role="dialog"
+   aria-labelledby="myModalLabel"
+   data-backdrop="false">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Confirmar creación</h4>
+          </div>
+          <div class="modal-body">
+              <div class="container row">
+                  Seguro que desea crear un Cliente Interno con los siguientes datos:
+
+                  <div class="form-horizontal">
+                      <label for="name"
+                             class="col-sm-1 control-label">Nombre:</label>
+                      <div class="col-sm-11">
+                          <p class="form-control-static">{{ document.dt_others_para }}</p>
+                      </div>
+                  </div>
+                  <div class="form-horizontal">
+                      <label for="name"
+                             class="col-sm-1 control-label">Dirección:</label>
+                      <div class="col-sm-11">
+                          <p class="form-control-static">{{ document.dt_others_address }}</p>
+                      </div>
+                  </div>
+                  <div class="form-horizontal">
+                      <label for="name"
+                             class="col-sm-1 control-label">Ubicación:</label>
+                      <div class="col-sm-11">
+                          <p class="form-control-static">{{document.dt_others_ubigeo}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button"
+                      class="btn btn-info"
+                      ng-click="confirmCreateClient()"
+                      ng-disabled="isSaveClientDisabled">
+                  Confirmar
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

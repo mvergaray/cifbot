@@ -1,0 +1,16 @@
+<ui-select ng-model="vm.model"
+           ng-class="{'ui-select-element': true}"
+           ng-disabled="vm.isSelectDisabled()"
+           ng-required="vm.config.required"
+           data-on-select="vm.onSelect(vm.model)">
+    <ui-select-match data-allow-clear="{{vm.config.allowClear}}"
+                     data-placeholder="{{vm.config.placeholder}}">
+        <span ng-bind="$select.selected[vm.config.displayValue]"></span>
+    </ui-select-match>
+    <ui-select-choices
+        repeat="item.id as item in vm.data | propsFilter: vm.propFilter($select.search)"
+        refresh="vm.refreshItems($select.search)"
+        refresh-delay="0">
+        <span ng-bind-html="item[vm.config.displayValue] | highlight: $select.search"></span>
+    </ui-select-choices>
+</ui-select>

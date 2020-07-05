@@ -1,0 +1,55 @@
+<md-content class="c-filter-panel_toggle md-padding"
+            layout
+            layout-align="space-between center"
+            md-padding>
+  <h4>Asignar registros</h1>
+
+</md-content>
+<md-content class="md-padding" layout-fill >
+    <md-card class="md-padding">
+        <md-card-content>
+            <form id="registrosForm" class="form-horizontal" ng-switch="vm.isLoading">
+                <div style="margin-bottom:30px;">Selecione la fecha en la que se cargaron los registros cuya asignación desea actualizar.</div>
+                <div class="form-group">
+                    <label for="uploadFile" class="col-sm-2 control-label">Selecciona la fecha de carga:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-model="vm.creationObject" ng-options="cc.created_at for cc in vm.creationCodes">
+                          <option value="">-- Seleccione fecha --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">Operario</label>
+                    <div class="col-sm-5">
+                        <se-selector config="vm.deliveryUserConfig"></se-selector>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">Remitente</label>
+                    <div class="col-sm-5"
+                         ng-switch="!!selection.enableSender">
+                        <se-selector ng-switch-when="true" config="vm.senderUserConfig"></se-selector>
+                        <div ng-switch-default> Habilite la asignación masiva si desea asignar el mismo remitente a todos los registros a ser cargados. </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
+                               ng-model="vm.selection.enableSender">
+                        <label class="form-check-label" for="defaultCheck1">
+                          Habilitar asignación masiva de remitente
+                        </label>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </md-card-content>
+
+
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button type="submit" class="md-raised md-primary"
+                    ng-click="vm.updateRecords()"
+                    ng-disabled="vm.disableSubmit">Actualizar</md-button>
+        </md-card-actions>
+    </md-card>
+</md-content>
+

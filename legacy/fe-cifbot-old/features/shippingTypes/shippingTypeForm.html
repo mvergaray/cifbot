@@ -1,0 +1,54 @@
+
+
+
+<div class="md-padding c-record-form">
+    <div class="margin-v-1"
+      ng-switch="!!internal_client.id"
+      layout
+      layout-align="space-between center">
+        <h4 class="box-title"
+          ng-switch-when="false">Creación de Tipo de Envío</h4>
+        <h4 class="box-title"
+          ng-switch-when="true">Edición de Tipo de Envío</h4>
+    </div>
+
+    <md-card flex="100"
+            flex-gt-sm="70">
+        <form class="form-horizontal " name="form" validate>
+            <md-card-content>
+                    <div class="form-group"
+                        ng-show="!!shipping_type.id">
+                        <label for="descripcion"
+                            class="col-sm-2 control-label">
+                            Código
+                        </label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{ shipping_type.id | leftPad }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name"
+                            class="col-sm-2 control-label"
+                            maxlength="200"
+                            required-field>Descripción</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="descripcion" placeholder="Descripción"
+                                required
+                                ng-model="shipping_type.name"
+                                data-auto-focus>
+                        </div>
+                    </div>
+
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button type="submit" class=""
+                            ng-click="backToList()">Cancelar
+                </md-button>
+
+                <md-button type="submit" class="md-primary md-raised md-primary"
+                            ng-click="save(form)">Guardar
+                </md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

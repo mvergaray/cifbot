@@ -1,0 +1,290 @@
+
+
+
+<div class="md-padding c-record-form">
+    <div class="margin-v-1"
+      ng-switch="!!employee.id"
+      layout
+      layout-align="space-between center">
+        <h4 class="box-title"
+          ng-switch-when="false">Creación de Empleado</h4>
+        <h4 class="box-title"
+          ng-switch-when="true">Edición de Empleado</h4>
+    </div>
+
+    <md-card>
+        <form class="form-horizontal" name="form" validate>
+            <md-card-content>
+                    <div class="form-group"
+                        ng-show="!!employee.id">
+                        <label class="col-sm-2 control-label">
+                            Código
+                        </label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{ employee.id | leftPad }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name"
+                            class="col-sm-2 control-label"
+                            required-field>Nombres</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                class="form-control"
+                                id="first_name"
+                                placeholder="Nombres"
+                                maxlength="200"
+                                required
+                                ng-model="employee.first_name"
+                                data-auto-focus>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name"
+                            class="col-sm-2 control-label"
+                            required-field>Apellido Paterno</label>
+                        <div class="col-sm-4">
+                            <input type="text"
+                                class="form-control"
+                                id="last_name"
+                                placeholder="Apellido Paterno"
+                                maxlength="200"
+                                ng-model="employee.last_name"
+                                required>
+                        </div>
+                        <label for="second_last_name"
+                            class="col-sm-2 control-label"
+                            required-field>Apellido Materno</label>
+                        <div class="col-sm-4">
+                            <input type="text"
+                                class="form-control"
+                                id="second_last_name"
+                                placeholder="Apellido Materno"
+                                maxlength="200"
+                                ng-model="employee.second_last_name"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                            required-field>Tipo</label>
+                        <div class="col-sm-6">
+                            <div class="radio inline">
+                                <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="1"
+                                        ng-model="employee.type"
+                                        ng-required="!employee.type">
+                                    Empleado
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="2"
+                                        ng-model="employee.type"
+                                        ng-required="!employee.type">
+                                    Proveedor
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="3"
+                                        ng-model="employee.type"
+                                        ng-required="!employee.type">
+                                    Agente
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                            required-field>Estado</label>
+                        <div class="col-sm-6">
+                            <div class="radio inline">
+                                <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="1"
+                                        ng-model="employee.status"
+                                        ng-required="!employee.status">
+                                    Activo
+                            </label>
+                        </div>
+                        <div class="radio inline">
+                            <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="2"
+                                        ng-model="employee.status"
+                                        ng-required="!employee.status">
+                                    Suspendido
+                            </label>
+                        </div>
+                        <div class="radio inline">
+                            <label class="radio col-sm-4">
+                                    <input type="radio"
+                                        value="3"
+                                        ng-model="employee.status"
+                                        ng-required="!employee.status">
+                                    Despedido
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sexo</label>
+                        <div class="col-sm-2">
+                            <div class="radio inline">
+                                <label class="radio col-sm-6">
+                                    <input type="radio" ng-model="employee.gender" value="M">
+                                    M
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-6">
+                                    <input type="radio" ng-model="employee.gender" value="F">
+                                    F
+                                </label>
+                            </div>
+                        </div>
+                        <label for="birth_date"
+                            class="col-sm-2 control-label">Fecha de Nacimiento</label>
+                        <div class="col-sm-2">
+                        <date-picker
+                            ng-model="employee.f_birth_date"
+                            data-tabindex="0"
+                            data-title="Fecha de Nacimiento">
+                        </date-picker>
+                        </div>
+                        <label for="start_date"
+                            class="col-sm-2 control-label">Fecha de Ingreso</label>
+                        <div class="col-sm-2">
+                        <date-picker
+                            ng-model="employee.f_start_date"
+                            data-tabindex="0"
+                            data-title="Fecha de Ingreso">
+                        </date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Documento</label>
+                        <div class="col-sm-2">
+                            <div class="radio inline">
+                                <label class="radio col-sm-6">
+                                    <input type="radio" ng-model="employee.doc_type" value="1">
+                                    L.E.
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-6">
+                                    <input type="radio" ng-model="employee.doc_type" value="2">
+                                    L.M.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text"
+                                class="form-control"
+                                id="doc_number"
+                                placeholder="Nº Documento"
+                                maxlength="20"
+                                ng-model="employee.doc_number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address"
+                            class="col-sm-2 control-label">Dirección</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                class="form-control"
+                                id="address"
+                                placeholder="Dirección"
+                                maxlength="300"
+                                ng-model="employee.address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone"
+                            class="col-sm-2 control-label">Teléfono</label>
+                        <div class="col-sm-3">
+                            <input type="text"
+                                class="form-control"
+                                id="telephone"
+                                placeholder="Nº Teléfono"
+                                maxlength="20"
+                                ng-model="employee.telephone">
+                        </div>
+                        <label class="col-sm-2 control-label">Estado Civil</label>
+                        <div class="col-sm-5">
+                            <div class="radio inline">
+                                <label class="radio col-sm-3">
+                                    <input type="radio" ng-model="employee.marital_status" value="1">
+                                    Casado
+                            </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-3">
+                                    <input type="radio" ng-model="employee.marital_status" value="2">
+                                    Divorciado
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-3">
+                                    <input type="radio" ng-model="employee.marital_status" value="3">
+                                    Soltero
+                                </label>
+                            </div>
+                            <div class="radio inline">
+                                <label class="radio col-sm-3">
+                                    <input type="radio" ng-model="employee.marital_status" value="4">
+                                    Viudo
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="license"
+                            class="col-sm-2 control-label">Nº Brevete</label>
+                        <div class="col-sm-3">
+                            <input type="text"
+                                class="form-control"
+                                id="license"
+                                placeholder="Nº Brevete"
+                                maxlength="20"
+                                ng-model="employee.license">
+                        </div>
+                        <label for="charge"
+                            class="col-sm-2 control-label">Cargo</label>
+                        <div class="col-sm-3">
+                            <input type="text"
+                                class="form-control"
+                                id="charge"
+                                placeholder="Cargo"
+                                maxlength="200"
+                                ng-model="employee.charge">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="legacy_id" class="col-sm-2 control-label">Código externo</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                maxlength="3"
+                                class="form-control"
+                                id="legacy_id"
+                                placeholder="ID del sistema original"
+                                ng-model="employee.legacy_id">
+                        </div>
+                    </div>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button type="submit" class=""
+                            ng-click="backToList()">Cancelar
+                </md-button>
+
+                <md-button type="submit" class="md-primary md-raised md-primary"
+                            ng-click="save(form)">Guardar
+                </md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

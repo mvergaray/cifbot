@@ -1,0 +1,164 @@
+<md-content class="c-filter-panel_toggle md-padding"
+            layout
+            layout-align="space-between center"
+            md-padding>
+            <h4>Gestión de Zonas</h1>
+</md-content>
+
+<md-content layout>
+    <md-card class="margin-1" flex>
+        <md-card-title-text class="md-padding">
+            <h4>
+                Departamentos
+            </h4>
+        </md-card-title-text>
+        <md-card-content>
+            <button type="button"
+                    class="btn btn-primary margin-bottom-1"
+                    ng-if="isCreationEnabled"
+                    ng-click="createNewDepartamento()">
+                <i class="fa fa-plus-circle"></i>
+                Nuevo Dpto.
+            </button>
+
+            <table class="table table-hover">
+                <tbody class="container-zones-list" layout>
+                    <tr ng-repeat="row in departamentos.results.list" layout>
+                        <td ng-click="showProvincias(row.coddpto, row)"
+                            ng-class="{success: row.isSelected}" flex>
+                            <span>{{ row.coddpto | zoneIds }} - {{ row.name }}</span>
+                        </td>
+                        <td ng-if="isEditionEnabled && !row.isReadOnly" flex>
+                            <a type="button"
+                                class="btn"
+                                ng-href="#/zonas/createDepartamento/{{row.coddpto}}"
+                                title="Editar">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td ng-if="isDeletionEnabled && !row.isReadOnly" flex>
+                            <a type="button"
+                                class="btn"
+                                ng-click="confirmDelete(row.code, row.name, 1)"
+                                title="Eliminar">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+    <md-card class="margin-1" flex>
+        <md-card-title-text class="md-padding">
+            <h4>
+                Provincias
+            </h4>
+        </md-card-title-text>
+        <md-card-content>
+            <button type="button"
+                    class="btn btn-primary margin-bottom-1"
+                    ng-if="isCreationEnabled && selectedZone.dpto > 0"
+                    ng-click="createNewProvincia()">
+                <i class="fa fa-plus-circle"></i>
+                Nueva Prov.
+            </button>
+            <table class="table table-hover">
+                <tbody class="container-zones-list" layout>
+                    <tr ng-repeat="row in provincias.results.list" layout>
+                        <td ng-click="showDistritos(row.codprov, row)"
+                            ng-class="{success: row.isSelected}" flex>
+                            <span>{{ row.codprov | zoneIds }} - {{ row.name }}</span>
+                        </td>
+                        <td ng-if="isEditionEnabled && !row.isReadOnly" flex>
+                            <a type="button"
+                                class="btn"
+                                ng-href="#/zonas/departamento/{{row.coddpto}}/provincia/{{row.codprov}}"
+                                title="Editar">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td ng-if="isDeletionEnabled && !row.isReadOnly" flex>
+                            <a type="button"
+                                class="btn"
+                                ng-click="confirmDelete(row.code, row.name, 2)"
+                                title="Eliminar">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+    <md-card class="margin-1" flex>
+        <md-card-title-text class="md-padding">
+            <h4>
+                Distritos
+            </h4>
+        </md-card-title-text>
+        <md-card-content>
+            <button type="button"
+                    class="btn btn-primary margin-bottom-1"
+                    ng-if="isCreationEnabled && selectedZone.prov > 0"
+                    ng-click="createNewDistrito()">
+                <i class="fa fa-plus-circle"></i>
+                Nuevo Dist.
+            </button>
+            <table class="table table-hover">
+                <tbody class="container-zones-list" layout>
+                    <tr ng-repeat="row in distritos.results.list" layout>
+                        <td flex>
+                            <span>{{ row.coddist | zoneIds }} - {{ row.name }}</span>
+                        </td>
+                        <td class="text-red" flex>
+                        {{ row.code }}
+                        </td>
+                        <td ng-if="isEditionEnabled && !row.isReadOnly" flex>
+                            <a type="button"
+                            class="btn"
+                            ng-href="#/zonas/departamento/{{row.coddpto}}/provincia/{{row.codprov}}/distrito/{{row.coddist}}"
+                            title="Editar">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td ng-if="isDeletionEnabled && !row.isReadOnly">
+                            <a type="button"
+                            class="btn"
+                            ng-click="confirmDelete(row.code, row.name, 3)"
+                            title="Eliminar">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+<div class="modal fade"
+     id="deleteZoneModal"
+     tabindex="-1"
+     role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Confirmar eliminación</h4>
+      </div>
+      <div class="modal-body">
+        Seguro que desea eliminar {{ toDelete.message }}: {{ toDelete.name }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        <button type="button"
+                class="btn  btn-danger"
+                ng-click="delete()"
+                data-dismiss="modal">
+            Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

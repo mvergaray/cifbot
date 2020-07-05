@@ -1,0 +1,40 @@
+<md-content class="layout-column layout-align-start-center layout-fill"
+            style="background-color: #d2d6de;">
+    <div class="login-logo"
+      md-padding
+          layout-align="center center"
+          layout>
+          <h1>CIFBOT</h1>
+    </div>
+
+    <md-card  class="md-padding" style="width:400px; background-color: white;" layout>
+        <form>
+            <md-card-title>
+                <span class="login-box-msg">Iniciar sesión</span>
+            </md-card-title>
+            <md-card-content >
+
+              <md-input-container>
+                <label>Usuario</label>
+                <input type="text" name="userName" class="form-control" placeholder="Email" autofocus
+                  ng-model="vm.username">
+              </md-input-container>
+
+              <md-input-container>
+                <label>Contraseña</label>
+                <input name="password" type="password" class="form-control" placeholder="Password"
+                  ng-model="vm.password">
+              </md-input-container>
+
+            </md-card-content>
+            <md-card-actions>
+                <div class="col-xs-4 pull-right">
+                    <button style="color: rgba(255,255,255,0.87);background-color: rgb(63,81,181);"
+                            class="md-raised md-primary md-button md-ink-ripple"
+                            type="submit"
+                            ng-click="vm.login()">Ingresar</button>
+                </div><!-- /.col -->
+            </md-card-actions>
+        </form>
+    </md-card>
+</md-content>

@@ -1,0 +1,107 @@
+<div class="se-grid-container" flex layout="column" layout-fill>
+  <filter-panel class="ux-header-panel"
+                data-search-keys="vm.filterParams"
+                data-clear="vm.clearFilters()"
+                data-menu-config="vm.menuConfig"
+                data-filter-params="vm.filterParams"
+                data-permissions="vm.permissions"></filter-panel>
+
+  <md-tabs class="md-whiteframe-4dp"
+    ng-if="vm.showGrid()"
+    md-dynamic-height md-border-bottom
+    md-selected="vm.selectedTab">
+    <md-tab label="Todos">
+      <md-card class="md-padding scroll">
+        <records-grid
+          ng-if="vm.selectedTab == 0"
+          data-delete-record="vm.confirmDelete(record)"
+          data-filters="vm.filterParams"
+          data-permissions="vm.permissions"
+          data-selected-records="vm.menuConfig.selectedRecords"
+          ></md-card>
+      </md-content>
+    </md-tab>
+
+    <md-tab label="Despacho">
+      <md-card class="md-padding">
+        <records-grid
+        ng-if="vm.selectedTab == 1"
+          data-filters="vm.filterParams"
+          data-permissions="vm.permissions"
+          data-selected-records="vm.menuConfig.selectedRecords"
+          data-status="1"
+          ></records-grid>
+      </md-card>
+    </md-tab>
+
+    <md-tab label="Consolidar">
+      <md-card class="md-padding">
+        <records-grid
+          ng-if="vm.selectedTab == 2"
+          data-filters="vm.filterParams"
+          data-permissions="vm.permissions"
+          data-selected-records="vm.menuConfig.selectedRecords"
+          data-status="3"
+          ></records-grid>
+      </md-card>
+    </md-tab>
+
+    <md-tab label="Tránsito">
+      <md-card class="md-padding">
+        <records-grid
+          ng-if="vm.selectedTab == 3"
+          data-filters="vm.filterParams"
+          data-permissions="vm.permissions"
+          data-selected-records="vm.menuConfig.selectedRecords"
+          data-status="4"
+          ></records-grid>
+      </md-card>
+    </md-tab>
+
+    <md-tab label="Culminado">
+      <md-card class="md-padding">
+        <records-grid
+          ng-if="vm.selectedTab == 4"
+          data-filters="vm.filterParams"
+          data-permissions="vm.permissions"
+          data-selected-records="vm.menuConfig.selectedRecords"
+          data-status="5"
+          layout
+          ></records-grid>
+      </md-card>
+    </md-tab>
+
+  </md-tabs>
+
+  <md-card class="content md-whiteframe-4dp" ng-if="!vm.showGrid()" layout-padding layout-margin>
+    <h4 layout-padding>Usted no tiene permisos para visualizar este módulo.</h4>
+  </md-card>
+
+</div>
+
+<div class="modal fade"
+   id="deleteRecordModal"
+   tabindex="-1"
+   role="dialog"
+   aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Confirmar eliminación</h4>
+          </div>
+          <div class="modal-body">
+              Seguro que desea eliminar el registro: {{ vm.toDelete.code }}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button"
+                      class="btn btn-danger"
+                      ng-click="vm.deleteRecord(vm.toDelete.id)"
+                      data-dismiss="modal">
+                  Eliminar
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
