@@ -1,3 +1,4 @@
+/* @ngInject */
 const Toast = function ($mdToast) {
   /**
    *
@@ -43,7 +44,5 @@ const Toast = function ($mdToast) {
     great: _great
   };
 };
-
-Toast.$inject = ['$mdToast'];
 
 export default Toast;

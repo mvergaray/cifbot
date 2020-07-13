@@ -1,8 +1,10 @@
 class SigninCtrl {
   constructor (
-    AuthService
+    AuthService,
+    CurrentUser
   ) {
     this.AuthService = AuthService;
+    this.CurrentUser = CurrentUser;
     this.mainMenu = [];
   }
 
@@ -15,7 +17,7 @@ class SigninCtrl {
       email: this.username,
       password: this.password
     })
-      .then()
+      .then(this.CurrentUser.setUser)
   }
 }
 

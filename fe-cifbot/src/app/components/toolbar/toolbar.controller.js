@@ -1,19 +1,30 @@
+/* @ngInject */
 const ToolbarCtrl = function (
   $scope,
   $location,
   $log,
   $mdSidenav,
-  $timeout
+  $state,
+  $timeout,
+  AuthService,
+  TokenService
 ) {
   var vm = this;
 
-  vm.logout = _logout;
+  vm.getPageTitle = _getPageTitle;
   vm.goToProfile = _goToProfile;
+  vm.logout = _logout;
   vm.openSidebar = buildDelayedToggler('left');
 
   function _logout () {
     // Delete token
-    $location.path('/');
+    AuthService.setRedirectState(undefined, undefined);
+    TokenService.logOut();
+    $state.go('signin');
+  }
+
+  function _getPageTitle () {
+    return $state.current.data.pageTitle;
   }
 
   function _goToProfile () {
@@ -49,11 +60,5 @@ const ToolbarCtrl = function (
     };
   }
 };
-
-ToolbarCtrl.$inject = ['$scope',
-  '$location',
-  '$log',
-  '$mdSidenav',
-  '$timeout'];
 
 export default ToolbarCtrl;

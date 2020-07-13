@@ -1,4 +1,8 @@
-const MdDateLocaleProvider = function($mdDateLocaleProvider) {
+/* @ngInject */
+const MdDateLocaleProvider = (
+  $mdDateLocaleProvider,
+  moment
+) => {
 
   $mdDateLocaleProvider.days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   $mdDateLocaleProvider.shortDays = ['Dom', 'Lum', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
@@ -15,8 +19,12 @@ const MdDateLocaleProvider = function($mdDateLocaleProvider) {
       return null;
     }
   };
+
+  $mdDateLocaleProvider.parseDate = function(dateString) {
+    var m = moment(dateString, 'DD/MM/YYYY', true);
+    return m.isValid() ? m.toDate() : new Date(NaN);
+  };
 };
 
-MdDateLocaleProvider.$inject = ['$mdDateLocaleProvider'];
 
 export default MdDateLocaleProvider;

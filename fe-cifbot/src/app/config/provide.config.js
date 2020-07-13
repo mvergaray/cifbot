@@ -1,3 +1,4 @@
+/* @ngInject */
 const ProvideConfig = function ($provide) {
   $provide.decorator('$resource', ['$delegate', 'ToastService',
     function ($delegate, notification) {
@@ -56,7 +57,5 @@ const ProvideConfig = function ($provide) {
       return decorator;
     }]);
 };
-
-ProvideConfig.$inject = ['$provide'];
 
 export default ProvideConfig;

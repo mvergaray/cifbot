@@ -51,6 +51,14 @@ const Session = function (
           // Stores token in HTML's sessionStorage
           $window.sessionStorage.setItem(authTokenKey, JSON.stringify(object.token));
         },
+
+        setDidSignOutFlag: function () {
+          $window.localStorage.setItem(this.storageEvents().DID_SIGN_OUT, true);
+        },
+        
+        setLogguedOutSession: function () {
+          $window.sessionStorage.setItem(SessionDidSignOut, true);
+        },
       };
 
     return service;

@@ -1,5 +1,6 @@
 /* @ngInject */
 const AuthInterceptor = function (
+  _,
   $q,
   Session,
   URLS
@@ -12,9 +13,7 @@ const AuthInterceptor = function (
      */
     function _response (response) {
       if (_isError(response)) {
-        if (_isNotFromRefreshAccessTokenEndPoint(response)) {
-          return _processErrorResponse(response);
-        }
+        // Do something to prevent
       } else {
         return response || $q.when(response);
       }
@@ -29,9 +28,7 @@ const AuthInterceptor = function (
     function _request (config) {
       config.headers = config.headers || {};
 
-      //if (_isApiV2(config)) {
-        _processApiV2Headers(config);
-      //}
+      _processApiV2Headers(config);
 
       return config || $q.when(config);
     }
@@ -44,16 +41,17 @@ const AuthInterceptor = function (
     function _processApiV2Headers (config) {
       var sessionToken = Session.getToken();
 
-      config.headers[ 'Authorization' ] = 'my-auth-token';
       if (_.includes(config.url, '')) {
         config.headers[ 'Content-Type' ] = 'application/json';
       } else {
         config.headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
       }
 
-      if (sessionToken && sessionToken.access_token) {
-        config.headers.Authorization = 'Bearer ' + sessionToken.access_token;
-        config.headers[ 'Cache-Control' ] = 'no-store';
+      if (_.includes(config.url, URLS.LOGIN)) {
+        config.headers[ 'Authorization' ] = 'my-auth-token';
+      } else if (sessionToken) {
+        config.headers.Authorization = 'Bearer ' + sessionToken;
+        //config.headers[ 'Cache-Control' ] = 'no-store';
       }
     }
 

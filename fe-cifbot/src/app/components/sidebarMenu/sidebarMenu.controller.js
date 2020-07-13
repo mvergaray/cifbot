@@ -1,6 +1,9 @@
 class SideBarMenuCtrl {
+  /* @ngInject */
   constructor (
+    CurrentUserService
   ) {
+    this.CurrentUserService = CurrentUserService;
     this.mainMenu = [];
   }
 
@@ -9,7 +12,7 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/inicio',
-      aIcon: 'track_changes',
+      aIcon: 'home',
       label: 'Inicio',
       isActive: true,
       subMenu: []
@@ -18,7 +21,7 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/ventas',
-      aIcon: 'track_changes',
+      aIcon: 'assignment',
       label: 'Comprobante de ventas',
       isActive: true,
       subMenu: []
@@ -27,7 +30,7 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/compras',
-      aIcon: 'track_changes',
+      aIcon: 'assignment',
       label: 'Comprobante de compras',
       isActive: true,
       subMenu: []
@@ -36,7 +39,7 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/provisiones',
-      aIcon: 'track_changes',
+      aIcon: 'assignment',
       label: 'Provisiones',
       isActive: true,
       subMenu: []
@@ -45,7 +48,7 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/empresas',
-      aIcon: 'track_changes',
+      aIcon: 'business',
       label: 'Mantenimiento de empresas',
       isActive: true,
       subMenu: []
@@ -54,11 +57,13 @@ class SideBarMenuCtrl {
       isAllowed: true,
       liClass: 'treeview',
       aLink: '#/cuentas',
-      aIcon: 'track_changes',
+      aIcon: 'calculate',
       label: 'Mantenimiento de cuentas contable',
       isActive: true,
       subMenu: []
     });
+
+    this.username = this.CurrentUserService.getUser();
   }
 }
 

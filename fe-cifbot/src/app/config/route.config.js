@@ -9,8 +9,7 @@ const RouteConfig = function (
   $stateProvider
     .state('app', {
       abstract: true,
-      template: '<app></app>',
-      controllerAs: 'app'
+      template: '<app></app>'
     })
     .state('app.rootPath', {
       url: '',

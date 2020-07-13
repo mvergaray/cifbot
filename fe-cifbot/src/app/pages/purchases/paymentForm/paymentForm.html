@@ -1,0 +1,60 @@
+<md-card class="md-padding">
+  <md-card-content>
+    <div layout>
+      <div flex
+      layout
+      layout-align="start center">
+      <label>Fecha de Documento</label>
+      <md-datepicker id="c-datepicker_start-date"
+          class="c-datepicker-container"
+          ng-model="vm.payment.date"
+          md-placeholder="DD/MM/YYY"
+          layout
+          layout-align="center center"
+          data-focus
+          data-tabindex="3"/></md-datepicker>
+    </div>
+    </div>
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Método de pago</label>
+      <md-select ng-model="vm.purchase.transaction_type_id">
+        <md-option ng-repeat="type in vm.transactionTypes" value="{{type.id}}">
+          {{type.description}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Cuenta bancaria</label>
+      <md-select ng-model="vm.purchase.bank_account_id">
+        <md-option ng-repeat="backAccount in vm.bankAccounts" value="{{backAccount.id}}">
+          {{backAccount.number}} {{backAccount.description}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+    <div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Notas</label>
+        <input ng-model="vm.purchase.description">
+      </md-input-container>
+    </div>
+
+    <div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Número de transacción</label>
+        <input ng-model="vm.purchase.number">
+      </md-input-container>
+    </div>
+
+    <div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Monto</label>
+        <input ng-model="vm.purchase.amount">
+      </md-input-container>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <md-button class="md-button md-raised md-primary">Registrar</md-button>
+  </md-card-actions>
+</md-card>

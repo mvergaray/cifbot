@@ -14,26 +14,24 @@
             </md-card-title>
             <md-card-content >
 
-              <md-input-container>
+              <md-input-container layout-fill>
                 <label>Usuario</label>
                 <input type="text" name="userName" class="form-control" placeholder="Email" autofocus
                   ng-model="vm.username">
               </md-input-container>
 
-              <md-input-container>
+              <md-input-container layout-fill>
                 <label>Contraseña</label>
                 <input name="password" type="password" class="form-control" placeholder="Password"
                   ng-model="vm.password">
               </md-input-container>
 
             </md-card-content>
-            <md-card-actions>
-                <div class="col-xs-4 pull-right">
-                    <button style="color: rgba(255,255,255,0.87);background-color: rgb(63,81,181);"
-                            class="md-raised md-primary md-button md-ink-ripple"
-                            type="submit"
-                            ng-click="vm.login()">Ingresar</button>
-                </div><!-- /.col -->
+
+            <md-card-actions layout flex-direction="reverse">
+                <button class="md-raised md-primary md-button md-ink-ripple"
+                        type="submit"
+                        ng-click="vm.login()">Ingresar</button>
             </md-card-actions>
         </form>
     </md-card>

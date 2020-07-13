@@ -1,4 +1,5 @@
 import '../../node_modules/angular-material/angular-material.scss';
+import '../../node_modules/angular-material-data-table/dist/md-data-table.min.css';
 
 import angular from 'angular';
 import * as am from 'angular-material';
@@ -6,10 +7,11 @@ import * as amsg from 'angular-messages';
 import * as aan from 'angular-animate';
 import * as aa from 'angular-aria';
 import * as as from 'angular-sanitize';
-import * as auir from '@uirouter/angularjs';
+import * as uiRouter from '@uirouter/angularjs';
 import * as are from 'angular-resource';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import ngMdDataTable from 'angular-material-data-table';
 
 import ProvideConfig from './config/provide.config';
 import MdIconProviderConfig from './config/mdIconProvider.config';
@@ -28,6 +30,7 @@ angular.module('cifbot', [
     'ngResource',
 
     'ngSanitize',
+    ngMdDataTable,
     AuthModule.name,
     ComponentsModule.name
   ]);
@@ -41,11 +44,14 @@ angular.module('cifbot')
   .config(ProvideConfig)
   .config(MdDateLocaleProviderConfig)
   .config(MdIconProviderConfig)
-  .constant('_', window._)
+  .config(MdThemingProviderConfig)
+  .constant('_', _)
+  .constant('moment', moment)
   .component('app', appComponent)
   ;
 
 import ComponentsModule from './components/components.module';
 import RouteConfig from './config/route.config';
 import AppConfig from './app.config';
+import MdThemingProviderConfig from './config/mdThemingProvider.config';
 

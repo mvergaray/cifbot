@@ -2,16 +2,16 @@ import angular from 'angular';
 import SidebarMenu from './sidebarMenu/sidebarMenu.component';
 import Toolbar from './toolbar/toolbar.component';
 
-import Toast from '../services/toast.service';
-import BackendService from '../services/backend.service'
-import CurrentUser from '../services/currentUser.service';
 import CoreModule from './commons/core/core.module';
-import PagesModule from './pages/pages.module';
+import PagesModule from '../pages/pages.module';
 import SigninModule from './signin/signin.module';
 import URLS from './commons/URLS.constant';
+import ServicesModule from '../services/services.module';
+import CompanyPicker from './companyPicker/companyPicker.component';
 
 
 const ComponentsModule = angular.module('app.components', [
+  ServicesModule.name,
   CoreModule.name,
   SigninModule.name,
   PagesModule.name
@@ -19,12 +19,10 @@ const ComponentsModule = angular.module('app.components', [
 
 ComponentsModule
   .constant('URLS', URLS)
-  .factory('BackendService', BackendService)
-  .factory('ToastService', Toast)
-  .factory('CurrentUserService', CurrentUser)
 
   .component('sidebarMenu', SidebarMenu)
   .component('toolbar', Toolbar)
+  .component('companyPicker', CompanyPicker)
   ;
 
 export default ComponentsModule;

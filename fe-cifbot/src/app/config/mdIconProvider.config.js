@@ -1,4 +1,5 @@
-const MdIconProvider = function($mdIconProvider) {
+/* @ngInject */
+const MdIconProvider = ($mdIconProvider) => {
   $mdIconProvider
     .icon('arrow_drop_down', 'images/icons/arrow_drop_down.svg', 24)
     .icon('add_location', 'images/icons/add_location.svg', 24)
@@ -12,6 +13,8 @@ const MdIconProvider = function($mdIconProvider) {
     .icon('assignment_turned_in', 'images/icons/assignment_turned_in.svg', 24)
     .icon('assignment', 'images/icons/assignment.svg', 24)
     .icon('business', 'images/icons/business.svg', 24)
+
+    .icon('calculate', 'images/icons/calculate.svg', 24)
     .icon('calendar_today', 'images/icons/calendar_today.svg', 24)
     .icon('check_box', 'images/icons/check_box.svg', 24)
     .icon('close', 'images/icons/close.svg', 24)
@@ -21,6 +24,7 @@ const MdIconProvider = function($mdIconProvider) {
 
 
     .icon('delete', 'images/icons/delete.svg', 24)
+    .icon('edit', 'images/icons/edit.svg', 24)
     .icon('exit_to_app', 'images/icons/exit_to_app.svg', 24)
     .icon('expand_less', 'images/icons/expand_less.svg', 24)
     .icon('expand_more', 'images/icons/expand_more.svg', 24)
@@ -35,6 +39,7 @@ const MdIconProvider = function($mdIconProvider) {
     .icon('local_shipping', 'images/icons/local_shipping.svg', 24)
     .icon('menu', 'images/icons/menu.svg', 24)
     .icon('more_vert', 'images/icons/more_vert.svg', 24)
+    .icon('monetization_on', 'images/icons/monetization_on.svg', 24)
     .icon('note', 'images/icons/note.svg', 24)
     .icon('note_add', 'images/icons/note_add.svg', 24)
     .icon('person', 'images/icons/person.svg', 24)
@@ -52,7 +57,5 @@ const MdIconProvider = function($mdIconProvider) {
 
     .defaultIconSet('images/icons/core-icons.svg', 24);
 };
-
-MdIconProvider.$inject = ['$mdIconProvider'];
 
 export default MdIconProvider;
