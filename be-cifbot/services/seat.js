@@ -29,7 +29,7 @@ service.getList = (params) => {
   }
 
   if (params.operation_id) {
-    commonQuery += 'AND a.operation_id IN (?) ';
+    commonQuery += 'AND A.operation_id IN (?) ';
     dataParams.push(params.operation_id);
   }
   // Counter doesn't need exta params so make a copy of data params at this point
