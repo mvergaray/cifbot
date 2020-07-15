@@ -54,7 +54,7 @@ ReceiptCtrl.saveObjects = (req, res) => {
     receipt = {};
 
     receipt.company_id = receiptBP.company_id;
-    receipt.operation_type_id = receiptBP.operation_type_id;
+    receipt.operation_type_id = Number(receiptBP.operation_type_id);
     receipt.assoc_company_id = receiptBP.assoc_company_id;
     receipt.serie = receiptBP.serie;
     receipt.doc_number = receiptBP.doc_number;

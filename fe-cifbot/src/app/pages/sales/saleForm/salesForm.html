@@ -1,5 +1,7 @@
 <md-card class="md-padding">
+  <form name="form">
   <md-card-content>
+
     <div layout>
       <div flex
         layout
@@ -7,6 +9,7 @@
         <label>Fecha de Documento</label>
         <md-datepicker id="c-datepicker_start-date"
             class="c-datepicker-container"
+            required
             ng-model="vm.sale.date"
             md-placeholder="DD/MM/YYY"
             layout
@@ -21,6 +24,7 @@
         <label>Fecha de Vencimiento</label>
         <md-datepicker id="c-datepicker_end-date"
             class="c-datepicker-container"
+            required
             ng-model="vm.sale.due_date"
             md-placeholder="DD/MM/YYY"
             layout
@@ -33,7 +37,7 @@
     <div layout>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Tipo de operación</label>
-        <md-select ng-model="vm.sale.type">
+        <md-select ng-model="vm.sale.operation_type_id" required>
           <md-option ng-repeat="type in vm.operationTypes" value="{{type.id}}">
             {{type.description}}
           </md-option>
@@ -42,14 +46,15 @@
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>Serie</label>
-        <input ng-model="vm.sale.serie">
+        <input ng-model="vm.sale.serie" required>
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>Número</label>
-        <input ng-model="vm.sale.doc_number">
+        <input ng-model="vm.sale.doc_number" required>
       </md-input-container>
     </div>
+
     <div layout>
       <company-picker data-selected-company="vm.sale.assoc_company_id"
                       data-company-type="2"
@@ -57,22 +62,25 @@
 
       <md-button class="md-primary md-raised">Crear cliente</md-button>
     </div>
+
     <div>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Glosa</label>
-        <input ng-model="vm.sale.description">
+        <input ng-model="vm.sale.description" required>
       </md-input-container>
     </div>
 
     <div layout>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Monto total</label>
-        <input ng-model="vm.sale.total_amount">
+        <input ng-model="vm.sale.total_amount"
+              ng-change="vm.updateTaxBase()"
+              required>
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>IGV</label>
-        <input ng-model="vm.sale.tax_percentage">
+        <input ng-model="vm.sale.tax_percentage" required disabled>
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
@@ -81,15 +89,19 @@
           disabled>
       </md-input-container>
     </div>
+
   </md-card-content>
-  <md-card-actions>
-    <md-button class="md-primary md-raised">Registrar comprobante</md-button>
+  <md-card-actions layout layout-align="end end">
+    <md-button class="md-primary md-raised"
+              type="submit"
+              ng-click="vm.onSubmit(form)">Registrar comprobante</md-button>
   </md-card-actions>
+  </form>
 </md-card>
 
 <div layout ng-if="vm.receiptId">
-  <md-card flex>
-    <md-card-actions>
+  <md-card class= flex>
+    <md-card-actions layout layout-align="end"  ng-if>
       <md-button class="md-primary md-raised">Agregar detalle</md-button>
     </md-card-actions>
 
@@ -101,15 +113,16 @@
               <th md-column><span>Cuenta</span></th>
               <th md-column><span>Debe</span></th>
               <th md-column>Haber</th>
-              <th md-column></th>
+              <th md-column ng-if></th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row md-select="receipt" md-select-id="name" md-auto-select ng-repeat="element in vm.listDataSource.data">
               <td md-cell>{{element.acc_desc}}</td>
               <td md-cell >{{ element.condition == 0 ? element.value : 0 }}</td>
-              <td md-cell >{{ element.condition == 1 ? element.value : 1}}</td>
-              <td md-cell layout>
+              <td md-cell >{{ element.condition == 1 ? element.value : 0}}</td>
+              <td md-cell width="70" > {{ vm.getOperationDate(element) }}</td>
+              <td md-cell layout ng-if>
                 <md-button class="md-icon-button"
                           ng-click="vm.confirmDeletion(element.id)">
                   <md-icon md-svg-icon="edit" ></md-icon>
@@ -124,8 +137,8 @@
 
   </md-card>
 
-  <md-card flex>
-    <md-card-actions>
+  <md-card class= flex>
+    <md-card-actions layout layout-align="end" ng-if>
       <md-button class="md-primary md-raised"
         ng-click="vm.goToPayment()">Agregar pago</md-button>
     </md-card-actions>
@@ -138,15 +151,16 @@
               <th md-column><span>Cuenta</span></th>
               <th md-column><span>Debe</span></th>
               <th md-column>Haber</th>
-              <th md-column></th>
+              <th md-column ng-if></th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row md-select="receipt" md-select-id="name" md-auto-select ng-repeat="element in vm.paymentsList.data">
               <td md-cell>{{element.acc_desc}}</td>
-              <td md-cell ng-if="element.condition == 0">{{ element.value }}</td>
-              <td md-cell ng-if="element.condition == 1">{{ element.value }}</td>
-              <td md-cell layout>
+              <td md-cell >{{ element.condition == 0 ? element.value : 0 }}</td>
+              <td md-cell >{{ element.condition == 1 ? element.value : 0}}</td>
+              <td md-cell width="70"> {{ vm.getOperationDate(element) }}</td>
+              <td md-cell layout ng-if>
                 <md-button class="md-icon-button"
                           ng-click="vm.confirmDeletion(element.id)">
                   <md-icon md-svg-icon="edit" ></md-icon>

@@ -7,7 +7,7 @@ const CompanyPicker = {
   controller,
   controllerAs: 'vm',
   bindings: {
-    selectedCompany: '<'
+    selectedCompany: '='
   }
 };
 

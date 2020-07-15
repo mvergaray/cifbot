@@ -6,9 +6,7 @@ const PurchasesConfig = function (
     .state('app.purchases', {
       url: '/compras',
       template: '<purchases-list></purchases-list>',
-      data: {
-        pageTitle: 'Gestión de comprobantes de compras'
-      }
+      title: 'Gestión de comprobantes de compras'
     });
 
   $stateProvider
@@ -17,27 +15,21 @@ const PurchasesConfig = function (
       accessMode: 'private',
       template: '<purchases-form></purchases-form>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Comprobante de compra'
-      }
+      title: 'Comprobante de compra'
     })
-    .state('app.purchasesForm', {
+    .state('app.purchasesEdit', {
       url: '/compras/:receiptId/editar',
       accessMode: 'private',
       template: '<purchases-form></purchases-form>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Comprobante de compra'
-      }
+      title: 'Comprobante de compra'
     })
-    .state('app.paymentForm', {
+    .state('app.outcomeNew', {
       url: '/compras/:receiptId/pago',
       accessMode: 'private',
-      template: '<payment-form></payment-form>',
+      template: '<outcome-form></outcome-form>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Registrar Pago'
-      }
+      title: 'Registrar Pago'
     });
 };
 

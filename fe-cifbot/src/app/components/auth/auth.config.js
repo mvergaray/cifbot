@@ -4,7 +4,7 @@ const AuthUser = function (
   $transitions,
   AuthService,
   Session,
-  StorageService,
+  StorageService
 ) {
   const  ACCESS_MODES = {
     PRIVATE: 'private',
@@ -26,7 +26,7 @@ const AuthUser = function (
     }
 
     if (sessionToken) {
-      retrieveUserData(toState, toState);
+      //retrieveUserData(toState, toState);
     } else {
       verifyUserWithoutSessionToken(toState, destination, toState);
     }
@@ -44,7 +44,8 @@ const AuthUser = function (
   }
 
   function goToHome (accountId) {
-    $state.go(rootState, {
+    //$state.go(rootState, {
+    $state.go(rootPath, {
       accountId: accountId
     });
   }

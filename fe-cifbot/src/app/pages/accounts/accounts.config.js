@@ -6,9 +6,7 @@ const AccountsConfig = function (
     .state('app.accounts', {
       url: '/cuentas',
       template: '<accounts-list></accounts-list>',
-      data: {
-        pageTitle: 'Gestión de Cuentas Contables'
-      }
+      title: 'Gestión de Cuentas Contables'
     });
 };
 

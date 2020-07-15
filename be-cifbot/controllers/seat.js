@@ -73,31 +73,31 @@ Controller.getObjects = (req, res) => {
   dataParams = dataParams.concat(countParams);
 
   dbQuery(dataQuery + countQuery, dataParams, function (err, rows) {
-  if (err) {
-    printLog(err);
-    res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
-    return;
-  }
-
-  rows = rows || [{}];
-
-  res.json({
-    results: {
-      list:rows[0],
-      count: rows[1][0].COUNTER
+    if (err) {
+      printLog(err);
+      res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
+      return;
     }
-  });
+
+    rows = rows || [{}];
+
+    res.json({
+      results: {
+        list:rows[0],
+        count: rows[1][0].COUNTER
+      }
+    });
   });
 };
 
 Controller.saveObject = (req, res) => {
   var seatBP = req.body,
-    seat = {};
+      seat = {};
 
-    seat.operation_id = seatBP.operation_id;
-    seat.plan_id = seatBP.plan_id;
-    seat.condition = seatBP.condition;
-    seat.value = seatBP.value;
+  seat.operation_id = seatBP.operation_id;
+  seat.plan_id = seatBP.plan_id;
+  seat.condition = seatBP.condition;
+  seat.value = seatBP.value;
 
   // Set default values
   seat.created_at = new Date();

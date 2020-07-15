@@ -24,7 +24,7 @@ const ToolbarCtrl = function (
   }
 
   function _getPageTitle () {
-    return $state.current.data.pageTitle;
+    return $state.current.title;
   }
 
   function _goToProfile () {

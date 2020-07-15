@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 /* @ngInject */
 class PurchasesFormCtrl {
 
@@ -8,7 +9,9 @@ class PurchasesFormCtrl {
     moment,
     ProvidersService,
     ReceiptsService,
-    TransactionsService
+    TransactionsService,
+
+    ROUTES
   ) {
     this.$mdDialog = $mdDialog;
     this.$state = $state;
@@ -18,15 +21,19 @@ class PurchasesFormCtrl {
     this.ReceiptsService = ReceiptsService;
     this.TransactionsService = TransactionsService;
 
+    // Constants
+    this.ROUTES = ROUTES;
+
     this.purchase = {};
+    this.purchase.tax_percentage = 18;
+
     this.operationTypes = [
-      {id: 2, code: 5, description: 'Compras'}
+      {id: 1, code: 4, description: 'Compras'}
     ];
 
+    this.dateFormat = 'YYYY-MM-DD';
     this.listDataSource = {};
     this.paymentsList = {};
-
-    this.paymentState = 'app.paymentForm';
   }
 
   $onInit () {
@@ -50,7 +57,7 @@ class PurchasesFormCtrl {
         date: date,
         due_date: dueDate,
         period: period,
-        operation: receipt.operation_type_id,
+        operation_type_id: receipt.operation_type_id,
         assoc_company_id: receipt.assoc_company_id,
         doc_number: receipt.doc_number,
         serie: receipt.serie,
@@ -84,9 +91,57 @@ class PurchasesFormCtrl {
   }
 
   goToPayment () {
-    this.$state.go(this.paymentState, {
+    this.$state.go(this.ROUTES.OUTCOME_NEW, {
       receiptId: this.receiptId
     });
+  }
+
+  getTaxBase () {
+    let taxBase = this.purchase.total_amount * 100 / (100 + this.purchase.tax_percentage);
+    taxBase = (Math.round(taxBase * 100) / 100) || 0;
+    return  taxBase;
+  }
+
+  mathRandom (number) {
+    return (Math.round(number * 100) / 100) || 0;
+  }
+
+  updateTaxBase () {
+    this.purchase.tax_base = this.purchase.total_amount * 100 / (100 + this.purchase.tax_percentage);
+    this.purchase.tax_base = (Math.round(this.purchase.tax_base * 100) / 100) || 0;
+  }
+
+  onSubmit (form) {
+    if (form && !form.$valid) {
+      return;
+    }
+
+    const saveObject = {
+      company_id: 1,
+      operation_type_id: this.purchase.operation_type_id,
+      assoc_company_id: this.purchase.assoc_company_id,
+      doc_number: this.purchase.doc_number,
+      serie: this.purchase.serie,
+      total_amount: this.purchase.total_amount,
+      tax_base: this.getTaxBase(),
+      tax_percentage: this.purchase.tax_percentage,
+      tax_value: this.mathRandom(this.purchase.total_amount - this.getTaxBase()),
+      description: this.purchase.description,
+      date: moment(this.purchase.date).format(this.dateFormat),
+      due_date: moment(this.purchase.due_date).format(this.dateFormat),
+    };
+
+    this.ReceiptsService
+      .updateReceipt(saveObject)
+      .then((response) => {
+        this.$state.go(this.ROUTES.PURCHASES_EDIT, {
+          receiptId: response.result.id
+        });
+      });
+  }
+
+  getOperationDate (operation) {
+    return moment(operation.created_by).format(this.dateFormatEs);
   }
 
 }

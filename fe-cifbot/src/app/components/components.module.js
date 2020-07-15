@@ -8,6 +8,7 @@ import SigninModule from './signin/signin.module';
 import URLS from './commons/URLS.constant';
 import ServicesModule from '../services/services.module';
 import CompanyPicker from './companyPicker/companyPicker.component';
+import Botcopy from './botcopy/botcopy.component';
 
 
 const ComponentsModule = angular.module('app.components', [
@@ -23,6 +24,7 @@ ComponentsModule
   .component('sidebarMenu', SidebarMenu)
   .component('toolbar', Toolbar)
   .component('companyPicker', CompanyPicker)
+  .component('botcopy', Botcopy)
   ;
 
 export default ComponentsModule;

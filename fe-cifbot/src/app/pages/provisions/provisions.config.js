@@ -1,6 +1,3 @@
-import ProvisionsModule from "./provisions.module";
-import ProvideConfig from "../../config/provide.config";
-
 /* @ngInject */
 const ProvisionsConfig = function (
   $stateProvider
@@ -8,17 +5,26 @@ const ProvisionsConfig = function (
   $stateProvider
     .state('app.provisions', {
       url: '/provisiones',
+      accessMode: 'private',
       template: '<provisions-list></provisions-list>',
-      data: {
-        pageTitle: 'Gestión de provisiones'
-      }
-    })
-    .state('app.provisions.form', {
-      url: '/provisiones/:receiptId',
+      reloadOnSearch: false,
+      title: 'Gestión de provisiones'
+    });
+
+  $stateProvider
+    .state('app.provisionsNew', {
+      url: '/provisiones/nuevo',
+      accessMode: 'private',
       template: '<provision-form></provision-form>',
-      data: {
-        pageTitle: 'Provisiones'
-      }
+      reloadOnSearch: false,
+      title: 'Provisión'
+    })
+    .state('app.provisionsEdit', {
+      url: '/provisiones/:receiptId/editar',
+      accessMode: 'private',
+      template: '<provision-form></provision-form>',
+      reloadOnSearch: false,
+      title: 'Provisión'
     });
 };
 

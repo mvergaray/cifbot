@@ -1,13 +1,17 @@
 class SideBarMenuCtrl {
   /* @ngInject */
   constructor (
-    CurrentUserService
+    CurrentUserService,
+    Session
   ) {
     this.CurrentUserService = CurrentUserService;
+    this.Session = Session;
+
     this.mainMenu = [];
   }
 
   $onInit () {
+    this.user = this.Session.getUserLogged();
     this.mainMenu.push({
       isAllowed: true,
       liClass: 'treeview',
@@ -66,7 +70,5 @@ class SideBarMenuCtrl {
     this.username = this.CurrentUserService.getUser();
   }
 }
-
-SideBarMenuCtrl.$inject = ['CurrentUserService'];
 
 export default SideBarMenuCtrl;

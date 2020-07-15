@@ -20,7 +20,7 @@
 
 <md-card>
 <md-table-container>
-  <table md-table md-row-select multiple ng-model="vm.selected" md-progress="vm.promise">
+  <table md-table ng-model="vm.selected" md-progress="vm.promise">
     <thead md-head md-order="vm.query.order" md-on-reorder="vm.getReceipts">
       <tr md-row>
         <th md-column><span>Comprobante</span></th>
@@ -47,11 +47,12 @@
           </md-button>
 
           <md-button class="md-icon-button"
-                    ng-click="vm.openPayments(element.id)">
+                    ng-click="vm.goToPayment(element.id)">
             <md-icon md-svg-icon="monetization_on" ></md-icon>
           </md-button>
-          
+
           <md-button class="md-icon-button"
+                    ng-if
                     ng-click="vm.confirmDeletion(element.id)">
             <md-icon md-svg-icon="delete" ></md-icon>
           </md-button>

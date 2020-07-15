@@ -3,10 +3,16 @@ class PurchasesListCtrl {
 
   constructor (
     $state,
-    ReceiptsService
+    ReceiptsService,
+    ROUTES
   ) {
     this.$state = $state;
     this.ReceiptsService = ReceiptsService;
+
+    // Constants
+    this.ROUTES = ROUTES;
+
+    this.dateFormat = 'YYYY-MM-DD';
 
     this.selected = [];
     this.query = {
@@ -17,8 +23,6 @@ class PurchasesListCtrl {
     this.filterParams = {};
     this.receipts = [];
 
-    this.formState = 'app.purchasesForm';
-    this.newFormState = 'app.purchasesNew';
   }
 
   $onInit () {
@@ -30,7 +34,7 @@ class PurchasesListCtrl {
       search: this.filterParams.search || '',
       operation_type_id: 1,
       page: this.filterParams.page || 0,
-      limit: this.filterParams.limit,
+      limit: 5000,
       skip: this.filterParams.skip || 0,
       sort: 'id',
       sort_dir: 'asc'
@@ -54,11 +58,17 @@ class PurchasesListCtrl {
   }
 
   goToCreate () {
-    this.$state.go(this.newFormState);
+    this.$state.go(this.ROUTES.PURCHASES_NEW);
   }
 
   openReceipt (receiptId) {
-    this.$state.go(this.formState, {
+    this.$state.go(this.ROUTES.PURCHASES_EDIT, {
+      receiptId
+    });
+  }
+
+  goToPayment (receiptId) {
+    this.$state.go(this.ROUTES.OUTCOME_NEW, {
       receiptId
     });
   }

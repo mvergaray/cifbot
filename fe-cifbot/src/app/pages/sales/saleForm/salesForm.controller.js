@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-
+import * as moment from 'moment';
 /* @ngInject */
 class SalesFormCtrl {
 
@@ -10,7 +10,9 @@ class SalesFormCtrl {
     moment,
     ClientsService,
     ReceiptsService,
-    TransactionsService
+    TransactionsService,
+
+    ROUTES
   ) {
     this.$mdDialog = $mdDialog;
     this.$state = $state;
@@ -20,7 +22,14 @@ class SalesFormCtrl {
     this.ReceiptsService = ReceiptsService;
     this.TransactionsService = TransactionsService;
 
+    // Constants
+    this.ROUTES = ROUTES;
+
     this.sale = {};
+    this.sale.tax_percentage = 18;
+
+    this.dateFormat = 'YYYY-MM-DD';
+    this.dateFormatEs = 'DD-MM-YYYY';
     this.operationTypes = [
       {id: 2, code: 5, description: 'Ventas'}
     ];
@@ -50,7 +59,7 @@ class SalesFormCtrl {
         date: date,
         due_date: dueDate,
         period: period,
-        operation: receipt.operation_type_id,
+        operation_type_id: receipt.operation_type_id,
         assoc_company_id: receipt.assoc_company_id,
         doc_number: receipt.doc_number,
         serie: receipt.serie,
@@ -83,6 +92,59 @@ class SalesFormCtrl {
       });
   }
 
+  onSubmit (form) {
+    if (form && !form.$valid) {
+      return;
+    }
+
+    const saveObject = {
+      company_id: 1,
+      operation_type_id: this.sale.operation_type_id,
+      assoc_company_id: this.sale.assoc_company_id,
+      doc_number: this.sale.doc_number,
+      serie: this.sale.serie,
+      total_amount: this.sale.total_amount,
+      tax_base: this.getTaxBase(),
+      tax_percentage: this.sale.tax_percentage,
+      tax_value: this.mathRandom(this.sale.total_amount - this.getTaxBase()),
+      description: this.sale.description,
+      date: moment(this.sale.date).format(this.dateFormat),
+      due_date: moment(this.sale.due_date).format(this.dateFormat),
+    };
+
+    this.ReceiptsService
+      .updateReceipt(saveObject)
+      .then((response) => {
+        this.$state.go(this.ROUTES.SALES_EDIT, {
+          receiptId: response.result.id
+        });
+      });
+  }
+
+  getTaxBase () {
+    let taxBase = this.sale.total_amount * 100 / (100 + this.sale.tax_percentage);
+    taxBase = (Math.round(taxBase * 100) / 100) || 0;
+    return  taxBase;
+  }
+
+  mathRandom (number) {
+    return (Math.round(number * 100) / 100) || 0;
+  }
+
+  updateTaxBase () {
+    this.sale.tax_base = this.sale.total_amount * 100 / (100 + this.sale.tax_percentage);
+    this.sale.tax_base = (Math.round(this.sale.tax_base * 100) / 100) || 0;
+  }
+
+  goToPayment () {
+    this.$state.go(this.ROUTES.INCOME_NEW, {
+      receiptId: this.receiptId
+    });
+  }
+
+  getOperationDate (operation) {
+    return moment(operation.created_by).format(this.dateFormatEs);
+  }
 }
 
 export default SalesFormCtrl;

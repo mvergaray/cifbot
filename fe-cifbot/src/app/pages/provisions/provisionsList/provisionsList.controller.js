@@ -2,9 +2,14 @@
 class ProvisionsListCtrl {
 
   constructor (
-    ReceiptsService
+    $state,
+    ReceiptsService,
+    ROUTES
   ) {
+    this.$state = $state;
     this.ReceiptsService = ReceiptsService;
+
+    this.ROUTES = ROUTES;
 
     this.selected = [];
     this.query = {
@@ -35,6 +40,10 @@ class ProvisionsListCtrl {
       });
   }
 
+  goToCreate () {
+    this.$state.go(this.ROUTES.PROVISIONS_NEW);
+  }
+
   searchByName() {
     this.paginator.firstPage();
     this.filterParams.search = this.searchFilter.trim().toLowerCase();
@@ -46,6 +55,13 @@ class ProvisionsListCtrl {
     this.filterParams.page = $event.pageIndex;
     this.filterParams.skip = $event.pageIndex * $event.pageSize;
     this.getReceipts();
+  }
+
+
+  openReceipt (receiptId) {
+    this.$state.go(this.ROUTES.PROVISIONS_EDIT, {
+      receiptId
+    });
   }
 };
 

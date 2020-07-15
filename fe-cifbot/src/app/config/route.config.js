@@ -13,7 +13,8 @@ const RouteConfig = function (
     })
     .state('app.rootPath', {
       url: '',
-      accessMode: 'private'
+      accessMode: 'private',
+      title: ''
     })
     .state('error', {
       url: '/error',

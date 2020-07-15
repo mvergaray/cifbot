@@ -36,7 +36,7 @@
       "no-use-before-define": 2,
       "no-with": 2,
       "no-whitespace-before-property": 2,
-      "one-var": [2, "always"],
+      "one-var": [],
       "operator-assignment": [2, "always"],
       "quotes": [2, "single"],
       "radix": 2,

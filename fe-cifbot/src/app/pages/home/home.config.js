@@ -7,9 +7,7 @@ const HomeConfig = (
       url: '/inicio',
       template: '<home></home>',
       accessMode: 'private',
-      data: {
-        pageTitle: 'Inicio'
-      }
+      title: 'Inicio',
     });
 };
 

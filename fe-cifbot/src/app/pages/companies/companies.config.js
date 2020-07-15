@@ -6,16 +6,12 @@ const CompaniesConfig = function (
     .state('app.companies', {
       url: '/empresas',
       template: '<companies-list></companies-list>',
-      data: {
-        pageTitle: 'Gestión de Empresas'
-      }
+      title: 'Gestión de Empresas'
     })
     .state('app.companies.form', {
       url: '/empresas/:companyId',
       template: '<company-form></company-form>',
-      data: {
-        pageTitle: 'Empresa'
-      }
+      title: 'Empresa'
     });
 };
 

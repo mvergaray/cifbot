@@ -1,4 +1,5 @@
 <md-card class="md-padding">
+  <form name="form">
   <md-card-content>
     <div layout>
       <div flex
@@ -7,6 +8,7 @@
         <label>Fecha de Documento</label>
         <md-datepicker id="c-datepicker_start-date"
             class="c-datepicker-container"
+            required
             ng-model="vm.purchase.date"
             md-placeholder="DD/MM/YYY"
             layout
@@ -21,6 +23,7 @@
         <label>Fecha de Vencimiento</label>
         <md-datepicker id="c-datepicker_end-date"
             class="c-datepicker-container"
+            required
             ng-model="vm.purchase.due_date"
             md-placeholder="DD/MM/YYY"
             layout
@@ -33,7 +36,7 @@
     <div layout>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Tipo de operación</label>
-        <md-select ng-model="vm.purchase.type">
+        <md-select ng-model="vm.purchase.operation_type_id" required>
           <md-option ng-repeat="type in vm.operationTypes" value="{{type.id}}">
             {{type.description}}
           </md-option>
@@ -42,12 +45,12 @@
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>Serie</label>
-        <input ng-model="vm.purchase.serie">
+        <input ng-model="vm.purchase.serie" required>
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>Número</label>
-        <input ng-model="vm.purchase.doc_number">
+        <input ng-model="vm.purchase.doc_number" required>
       </md-input-container>
     </div>
     <div layout>
@@ -59,19 +62,20 @@
     <div>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Glosa</label>
-        <input ng-model="vm.purchase.description">
+        <input ng-model="vm.purchase.description" required>
       </md-input-container>
     </div>
 
     <div layout>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Monto total</label>
-        <input ng-model="vm.purchase.total_amount">
+        <input ng-model="vm.purchase.total_amount" required
+              ng-change="vm.updateTaxBase()">
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
         <label>IGV</label>
-        <input ng-model="vm.purchase.tax_percentage">
+        <input ng-model="vm.purchase.tax_percentage" disabled>
       </md-input-container>
 
       <md-input-container class="md-block" flex-gt-sm>
@@ -82,25 +86,27 @@
     </div>
   </md-card-content>
   <md-card-actions>
-    <md-button class="md-primary md-raised">Registrar comprobante</md-button>
+    <md-button class="md-primary md-raised" type="submit"
+              ng-click="vm.onSubmit(form)">Registrar comprobante</md-button>
   </md-card-actions>
+  </form>
 </md-card>
 
 <div layout ng-if="vm.receiptId">
   <md-card flex>
-    <md-card-actions>
+    <md-card-actions ng-if>
       <md-button class="md-primary md-raised">Agregar detalle</md-button>
     </md-card-actions>
 
     <md-card-content>
       <md-table-container ng-if="vm.listDataSource.data && vm.listDataSource.data.length">
-        <table md-table  md-progress="vm.promise">
+        <table md-table md-progress="vm.promise">
           <thead md-head md-order="vm.query.order">
             <tr md-row>
               <th md-column><span>Cuenta</span></th>
               <th md-column><span>Debe</span></th>
               <th md-column>Haber</th>
-              <th md-column></th>
+              <th md-column ng-if></th>
             </tr>
           </thead>
           <tbody md-body>
@@ -108,6 +114,7 @@
               <td md-cell>{{element.acc_desc}}</td>
               <td md-cell >{{ element.condition == 0 ? element.value : 0 }}</td>
               <td md-cell >{{ element.condition == 1 ? element.value :0 }}</td>
+              <td md-cell width="70"> {{ vm.getOperationDate(element) }}</td>
               <td md-cell layout ng-if>
                 <md-button class="md-icon-button"
                           ng-click="vm.confirmDeletion(element.id)">
@@ -124,7 +131,7 @@
   </md-card>
 
   <md-card flex>
-    <md-card-actions>
+    <md-card-actions ng-if>
       <md-button class="md-primary md-raised"
           ng-click="vm.goToPayment()">Agregar pago</md-button>
     </md-card-actions>
@@ -145,6 +152,7 @@
               <td md-cell>{{element.acc_desc}}</td>
               <td md-cell>{{ element.condition == 0 ? element.value : 0 }}</td>
               <td md-cell>{{ element.condition == 1 ? element.value : 0}}</td>
+              <td md-cell width="70"> {{ vm.getOperationDate(element) }}</td>
               <td md-cell layout>
                 <md-button class="md-icon-button"
                           ng-click="vm.confirmDeletion(element.id)">

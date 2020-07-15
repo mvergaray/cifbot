@@ -2,10 +2,14 @@
 class SalesListCtrl {
   constructor (
     $state,
-    ReceiptsService
+    ReceiptsService,
+    ROUTES
   ) {
     this.$state = $state;
     this.ReceiptsService = ReceiptsService;
+
+    // Constants
+    this.ROUTES = ROUTES;
 
     this.selected = [];
     this.query = {
@@ -15,9 +19,6 @@ class SalesListCtrl {
     };
     this.filterParams = {};
     this.receipts = [];
-
-    this.formState = 'app.salesForm';
-    this.newFormState = 'app.salesNew';
   }
 
   $onInit () {
@@ -29,7 +30,7 @@ class SalesListCtrl {
       search: this.filterParams.search || '',
       operation_type_id: 2,
       page: this.filterParams.page || 0,
-      limit: this.filterParams.limit,
+      limit: 5000,
       skip: this.filterParams.skip || 0,
       sort: 'id',
       sort_dir: 'asc'
@@ -52,13 +53,18 @@ class SalesListCtrl {
     this.getReceipts();
   }
 
-
   goToCreate () {
-    this.$state.go(this.newFormState);
+    this.$state.go(this.ROUTES.SALES_NEW);
   }
 
   openReceipt (receiptId) {
-    this.$state.go(this.formState, {
+    this.$state.go(this.ROUTES.SALES_EDIT, {
+      receiptId
+    });
+  }
+
+  goToPayment (receiptId) {
+    this.$state.go(this.ROUTES.INCOME_NEW, {
       receiptId
     });
   }

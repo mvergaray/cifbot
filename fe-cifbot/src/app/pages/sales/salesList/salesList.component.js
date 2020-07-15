@@ -1,5 +1,5 @@
-import template from './sales.html';
-import controller from './sales.controller';
+import template from './salesList.html';
+import controller from './salesList.controller';
 
 /* @ngInject */
 const SalesList = {

@@ -27,6 +27,7 @@ const Session = function (
             DID_SIGN_OUT: 'didSignOut'
           };
         },
+
         /**
          * Returns the current authentication token object.
          *
@@ -35,12 +36,19 @@ const Session = function (
         getToken: () => {
           var rawToken = $window.sessionStorage.getItem(authTokenKey);
           if (rawToken) {
-            return JSON.parse(rawToken);
+            return _.get(JSON.parse(rawToken), 'token');
           }
         },
 
         getRememberMe: () => {
           return JSON.parse($window.localStorage.getItem(rememberMeKey));
+        },
+
+        getUserLogged: () => {
+          var rawToken = $window.sessionStorage.getItem(authTokenKey);
+          if (rawToken) {
+            return _.get(JSON.parse(rawToken), 'user');
+          }
         },
 
         registerToken: function (data) {
@@ -49,13 +57,13 @@ const Session = function (
 
         registerTokenObject: function (object) {
           // Stores token in HTML's sessionStorage
-          $window.sessionStorage.setItem(authTokenKey, JSON.stringify(object.token));
+          $window.sessionStorage.setItem(authTokenKey, JSON.stringify(object));
         },
 
         setDidSignOutFlag: function () {
           $window.localStorage.setItem(this.storageEvents().DID_SIGN_OUT, true);
         },
-        
+
         setLogguedOutSession: function () {
           $window.sessionStorage.setItem(SessionDidSignOut, true);
         },

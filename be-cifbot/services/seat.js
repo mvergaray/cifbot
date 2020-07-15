@@ -3,25 +3,25 @@ let service = {};
 
 service.getList = (params) => {
   let filter = {
-      pageStart: parseInt(params.skip || 0, 10),
-      pageCount: parseInt(params.limit || 0, 10),
-      orderBy: ''
-    },
-    dataQuery = `SELECT
-      A.id,
-      A.operation_id,
-      A.plan_id,
-      A.condition,
-      A.value,
-      A.status,
-      b.acc_number,
-      b.acc_desc
+        pageStart: parseInt(params.skip || 0, 10),
+        pageCount: parseInt(params.limit || 0, 10),
+        orderBy: ''
+      },
+      dataQuery = `SELECT
+        A.id,
+        A.operation_id,
+        A.plan_id,
+        A.condition,
+        A.value,
+        A.status,
+        b.acc_number,
+        b.acc_desc
 
-      FROM AccSeat A
-      LEFT JOIN accplan b ON A.plan_id = b.id
-      WHERE 1 `,
-    commonQuery = 'AND A.STATUS = 1 ',
-    dataParams = [];
+        FROM AccSeat A
+        LEFT JOIN accplan b ON A.plan_id = b.id
+        WHERE 1 `,
+      commonQuery = 'AND A.STATUS = 1 ',
+      dataParams = [];
 
   // Set order expression
   if (params.sort) {
@@ -60,7 +60,7 @@ service.getList = (params) => {
   dataQuery += ';';
 
   return new Promise((resolve, reject) => {
-    dbQuery(dataQuery , dataParams, function (err, rows) {
+    dbQuery(dataQuery, dataParams, function (err, rows) {
       if (err) {
         return reject(err);
       }

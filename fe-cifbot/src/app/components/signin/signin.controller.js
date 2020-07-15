@@ -17,7 +17,7 @@ class SigninCtrl {
       email: this.username,
       password: this.password
     })
-      .then(this.CurrentUser.setUser)
+      .then();
   }
 }
 

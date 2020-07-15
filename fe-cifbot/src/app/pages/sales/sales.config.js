@@ -1,3 +1,4 @@
+/* @ngInject */
 const SalesConfig = function (
   $stateProvider
 ) {
@@ -7,9 +8,7 @@ const SalesConfig = function (
       accessMode: 'private',
       template: '<sales-list></sales-list>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Gestión de comprobantes de ventas'
-      }
+      title: 'Gestión de comprobantes de ventas'
     });
 
   $stateProvider
@@ -18,18 +17,28 @@ const SalesConfig = function (
       accessMode: 'private',
       template: '<sales-form></sales-form>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Comprobante de venta'
-      }
+      title: 'Comprobante de venta'
     })
-    .state('app.salesForm', {
+    .state('app.salesEdit', {
       url: '/ventas/:receiptId/editar',
       accessMode: 'private',
       template: '<sales-form></sales-form>',
       reloadOnSearch: false,
-      data: {
-        pageTitle: 'Comprobante de venta'
-      }
+      title: 'Comprobante de venta'
+    })
+    .state('app.incomeNew', {
+      url: '/ventas/:receiptId/pago',
+      accessMode: 'private',
+      template: '<income-form></income-form>',
+      reloadOnSearch: false,
+      title: 'Registrar Pago'
+    })
+    .state('app.incomeEdit', {
+      url: '/ventas/:receiptId/pago',
+      accessMode: 'private',
+      template: '<income-form></income-form>',
+      reloadOnSearch: false,
+      title: 'Registrar Cobro'
     });
 };
 

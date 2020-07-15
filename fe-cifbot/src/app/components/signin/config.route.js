@@ -5,9 +5,7 @@ const SigninConfigRoute = (
     .state('signin', {
       url: '/signin',
       template: '<sign-in layout-fill></sign-in>',
-      data: {
-        pageTitle: 'Signin'
-      }
+      title: 'Ingresar'
     })
     .state('signout', {
       url: '/signout'

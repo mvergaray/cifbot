@@ -1,0 +1,52 @@
+<md-card class="md-padding">
+  <form name="form">
+    <md-card-content>
+
+      <div flex
+      layout
+      layout-align="start center">
+      <label>Fecha de Documento</label>
+      <md-datepicker id="c-datepicker_start-date"
+          class="c-datepicker-container"
+          required
+          ng-model="vm.receipt.date"
+          md-placeholder="DD/MM/YYY"
+          layout
+          layout-align="center center"
+          data-focus
+          data-tabindex="3"/></md-datepicker>
+    </div>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Tipo de operación</label>
+        <md-select ng-model="vm.receipt.operation_type_id"
+          required>
+          <md-option ng-repeat="type in vm.operationTypes" value="{{type.id}}">
+            {{type.description}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Número de comprobante</label>
+          <input ng-model="vm.receipt.doc_number"
+                type="number"
+                required>
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Glosa</label>
+          <input ng-model="vm.receipt.description" required>
+        </md-input-container>
+      </div>
+    </md-card-content>
+    <md-card-actions>
+      <md-button class="md-button md-raised md-primary"
+        type="submit"
+        ng-click="vm.onSubmit(form)">Registrar</md-button>
+    </md-card-actions>
+    </form>
+</md-card>
