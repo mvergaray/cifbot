@@ -109,7 +109,7 @@ service.getReceipt = (receiptId) => {
       A.tax_value,
       (A.tax_base + A.tax_value) total_amount,
       B.id operation_id
-      FROM Receipt A
+      FROM receipt A
       LEFT JOIN operation B ON A.id = B.receipt_id
       WHERE A.status = 1 AND A.id = ?`;
 

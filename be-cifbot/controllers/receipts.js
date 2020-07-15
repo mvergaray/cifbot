@@ -204,7 +204,7 @@ ReceiptCtrl.updateObject = (req, res) => {
   receipt.updated_at = new Date();
   receipt.updated_by = req.user && req.user.id || -1;
 
-  dbQuery('UPDATE Receipt SET ? WHERE ID = ?;', [receipt, id],
+  dbQuery('UPDATE receipt SET ? WHERE ID = ?;', [receipt, id],
     function (err) {
       if (err) {
         printLog(err);
@@ -225,7 +225,7 @@ ReceiptCtrl.deleteObject = (req, res) => {
       updated_by: req.user && req.user.id || -1
     };
 
-  dbQuery('UPDATE Receipt SET ? WHERE ID = ?;', [receipt, id], function (err) {
+  dbQuery('UPDATE receipt SET ? WHERE ID = ?;', [receipt, id], function (err) {
     if (err) {
       printLog(err);
       res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
