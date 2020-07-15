@@ -17,7 +17,7 @@ service.getList = (params) => {
         b.acc_number,
         b.acc_desc
 
-        FROM AccSeat A
+        FROM accseat A
         LEFT JOIN accplan b ON A.plan_id = b.id
         WHERE 1 `,
       commonQuery = 'AND A.STATUS = 1 ',
@@ -70,7 +70,7 @@ service.getList = (params) => {
 };
 
 service.saveSeat = (seats) => {
-  let query = 'INSERT INTO AccSeat SET ?;';
+  let query = 'INSERT INTO accseat SET ?;';
 
   return new Promise( ( resolve, reject) => {
     dbQuery(query, seats, (err, rows) => {

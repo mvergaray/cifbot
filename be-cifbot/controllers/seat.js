@@ -145,7 +145,7 @@ Controller.updateObject = (req, res) => {
   seat.condition = seatBP.condition;
   seat.value = seatBP.value;
 
-  dbQuery('UPDATE AccSeat SET ? WHERE ID = ?;', [seat, id],
+  dbQuery('UPDATE accseat SET ? WHERE ID = ?;', [seat, id],
     function (err) {
       if (err) {
         printLog(err);
@@ -159,14 +159,14 @@ Controller.updateObject = (req, res) => {
 
 Controller.deleteObject = (req, res) => {
   var id = req.params.id,
-  seat = {
-      // Set default values
-      status: -1,
-      updated_at: new Date(),
-      updated_by: req.user && req.user.id || -1
-    };
+      seat = {
+        // Set default values
+        status: -1,
+        updated_at: new Date(),
+        updated_by: req.user && req.user.id || -1
+      };
 
-  dbQuery('UPDATE AccSeat SET ? WHERE ID = ?;', [seat, id], function (err) {
+  dbQuery('UPDATE accseat SET ? WHERE ID = ?;', [seat, id], function (err) {
     if (err) {
       printLog(err);
       res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
