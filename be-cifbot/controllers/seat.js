@@ -24,8 +24,8 @@ Controller.getObjects = (req, res) => {
       pageCount: parseInt(req.query.limit || 0, 10),
       orderBy: ''
     },
-    dataQuery = 'SELECT * FROM AccSeat A WHERE 1 ',
-    countQuery = 'SELECT COUNT(A.id) AS COUNTER FROM Operation A WHERE 1 ',
+    dataQuery = 'SELECT * FROM accseat A WHERE 1 ',
+    countQuery = 'SELECT COUNT(A.id) AS COUNTER FROM operation A WHERE 1 ',
     commonQuery = 'AND A.STATUS = 1 ',
     dataParams = [],
     countParams = [];
@@ -103,7 +103,7 @@ Controller.saveObject = (req, res) => {
   seat.created_at = new Date();
   seat.created_by = req.user && req.user.id || -1;
 
-  dbQuery('INSERT INTO AccSeat SET ?;', seat, function (err, result) {
+  dbQuery('INSERT INTO accseat SET ?;', seat, function (err, result) {
     if (err) {
       printLog(err);
       res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
@@ -117,7 +117,7 @@ Controller.saveObject = (req, res) => {
 Controller.getObject = (req, res) => {
   let seatId = req.params.id,
       dataQuery = 'SELECT A.* ' +
-        ' FROM AccSeat A ' +
+        ' FROM accseat A ' +
         ' WHERE A.ID = ?;';
 
   dbQuery(dataQuery, [seatId], function (err, result) {

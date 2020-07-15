@@ -21,7 +21,7 @@ Controller.getObjects = (req, res) => {
       pageCount: parseInt(req.query.limit || 0, 10),
       orderBy: ''
     },
-    dataQuery = 'SELECT a.* FROM Operation a WHERE 1 ',
+    dataQuery = 'SELECT a.* FROM operation a WHERE 1 ',
     countQuery = 'SELECT COUNT(a.id) AS COUNTER FROM operation a WHERE 1 ',
     commonQuery = 'AND a.status = 1 ',
     dataParams = [],
@@ -111,7 +111,7 @@ Controller.saveObject = (req, res) => {
   operation.created_at = new Date();
   operation.created_by = req.user && req.user.id || -1;
 
-  dbQuery('INSERT INTO Operation SET ?;', operation, function (err, result) {
+  dbQuery('INSERT INTO operation SET ?;', operation, function (err, result) {
     if (err) {
       printLog(err);
       res.status(500).send({code: 500, msg: 'Internal Server Error', dev: err});
@@ -123,7 +123,7 @@ Controller.saveObject = (req, res) => {
 };
 
 Controller.saveObjects = (operation) => {
-  let query = 'INSERT INTO Operation SET ?;',
+  let query = 'INSERT INTO operation SET ?;',
     resultOperation = {};
 
   return new Promise( ( resolve, reject) => {
@@ -178,7 +178,7 @@ Controller.updateObject = (req, res) => {
   operation.receipt_id = operationBP.receipt_id;
   operation.description = operationBP.description;
 
-  dbQuery('UPDATE Operation SET ? WHERE ID = ?;', [operation, id],
+  dbQuery('UPDATE operation SET ? WHERE ID = ?;', [operation, id],
     function (err) {
       if (err) {
         printLog(err);

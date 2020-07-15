@@ -78,9 +78,9 @@ AuthCtrl.getUser = (req, res) => {
 
   // check if it is ok or not
   // aqui se puede hacer la busqueda del usuario
-  var query = 'SELECT a.*, CONCAT(c.name, \' - \', b.name) origin FROM USERS a' +
-        ' LEFT JOIN AREAS b ON a.locate_area = b.id' +
-        ' LEFT JOIN OFFICES c ON b.office_id = c.id' +
+  var query = 'SELECT a.*, CONCAT(c.name, \' - \', b.name) origin FROM users a' +
+        ' LEFT JOIN areas b ON a.locate_area = b.id' +
+        ' LEFT JOIN offices c ON b.office_id = c.id' +
         ' WHERE a.STATUS > 0 ' +
         ' AND USERNAME LIKE ?;',
       user = {};
@@ -99,7 +99,7 @@ AuthCtrl.getUser = (req, res) => {
         return;
       }
       // Add allowed clients to the user session
-      dbQuery('select client_id from USERS_CLIENTS where user_id = ?;', [user.id], function (err, rows) {
+      dbQuery('select client_id from users_clients where user_id = ?;', [user.id], function (err, rows) {
         if (rows && rows.length) {
           user.clients = rows.map(function (item) {
             return item.client_id;
@@ -107,7 +107,7 @@ AuthCtrl.getUser = (req, res) => {
         }
 
         query = 'select e.name, r._view, r._create, r._edit, r._delete  ' +
-              'from ENTITIES e ' +
+              'from entities e ' +
               'left join RESTRICTIONS r  on e.id = r.entity_id and r.user_id = ?;';
 
         dbQuery(query, [user.id], function (err, rows) {

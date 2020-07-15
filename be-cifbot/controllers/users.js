@@ -163,7 +163,7 @@ UserCtrl.saveUsers = (req, res) => {
 
         // Insert restrictions
         if (req.body.entities && req.body.entities.length) {
-          uEQueries = ' delete from RESTRICTIONS where user_id = ? ;';
+          uEQueries = ' delete from restrictions where user_id = ? ;';
           userClientQueryParams.push(userID);
 
           req.body.entities.forEach(function (item) {
@@ -231,7 +231,7 @@ UserCtrl.getUserById = (req, res) => {
         'U.username, O.client_id locate_client, O.id locate_office, A.id locate_area, ' +
         'O.name as office_name, A.name as area_name, ' +
         'UB.code ubigeo_id, UB.id ubigeo_id_id, UB.name ubigeo_desc ' +
-        'FROM USERS U ' +
+        'FROM users U ' +
         'LEFT JOIN AREAS A ON U.locate_area = A.ID ' +
         'LEFT JOIN OFFICES O ON A.OFFICE_ID = O.ID ' +
         'LEFT JOIN UBIGEO UB ON U.UBIGEO_ID_ID = UB.ID ' +

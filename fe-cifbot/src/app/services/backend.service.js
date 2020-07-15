@@ -2,7 +2,8 @@
 const BackendService = (
   $http
 ) => {
-  const prefix = 'http://localhost:3000',
+  //const prefix = 'http://localhost:3000',
+  const prefix = 'http://198.199.65.100/api',
     backendSvc = {
       post: (url, data, config) => {
         return $http.post(

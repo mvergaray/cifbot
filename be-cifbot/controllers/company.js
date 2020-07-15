@@ -192,7 +192,7 @@ Controller.updateObject = (req, res) => {
 
 /*
 Controller.saveObjects = (operation) => {
-  let query = 'INSERT INTO Operation SET ?;',
+  let query = 'INSERT INTO operation SET ?;',
     resultOperation = {};
 
   return new Promise( ( resolve, reject) => {

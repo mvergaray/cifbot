@@ -1,5 +1,7 @@
 const path = require('path');
-var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/app/app.module.js',
@@ -32,9 +34,14 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new ngAnnotatePlugin({
             add: true,
             // other ng-annotate options here
-        })
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/index.html'
+        }),
     ]
 };

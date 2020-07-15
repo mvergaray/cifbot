@@ -3,7 +3,7 @@ const SeatSvc = require('./seat');
 let service = {};
 
 service.saveObjects = (operation) => {
-  let query = 'INSERT INTO Operation SET ?;',
+  let query = 'INSERT INTO operation SET ?;',
     resultOperation = {};
 
   return new Promise( ( resolve, reject) => {
