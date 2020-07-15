@@ -42,7 +42,7 @@ service.getList = (params) => {
   if (filter.orderBy) {
     dataQuery += filter.orderBy;
   } else {
-    dataQuery += 'a.id DESC';
+    dataQuery += 'A.id DESC';
   }
 
   // Set always an start for data
