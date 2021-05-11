@@ -36,7 +36,7 @@
     "angular-resource": "^1.8.0",
     "angular-route": "^1.8.0",
     "angular-sanitize": "^1.8.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0"
   }
 }
